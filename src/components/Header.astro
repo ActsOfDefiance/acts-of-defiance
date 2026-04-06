@@ -1,0 +1,40 @@
+---
+const navItems = [
+  { label: "Artists", href: "/artists" },
+  { label: "Movements", href: "/movements" },
+  { label: "Organizations", href: "/organizations" },
+  { label: "People", href: "/people" },
+  { label: "About", href: "/about" },
+];
+---
+
+<header
+  class="fixed top-0 w-full z-50 flex justify-between items-center px-8 py-4 backdrop-blur-md bg-deep-charcoal/85"
+>
+  <a href="/" class="flex items-center gap-3 group">
+    <img
+      src="/logo_just_fist_cropped.png"
+      alt="Acts of Defiance logo — raised fist holding a pen"
+      class="w-20 h-20 object-contain"
+    />
+    <span
+      class="text-xl font-black text-warm-gold tracking-tighter uppercase"
+      style="font-family: var(--font-headline)"
+    >
+      Acts of Defiance
+    </span>
+  </a>
+  <nav class="hidden md:flex items-center gap-8">
+    {
+      navItems.map((item) => (
+        <a
+          href={item.href}
+          class="text-white hover:text-warm-gold transition-colors font-medium text-sm tracking-wide uppercase"
+          style="font-family: var(--font-headline)"
+        >
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>

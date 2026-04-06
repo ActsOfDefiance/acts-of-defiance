@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+/* Acts of Defiance design tokens — see docs/design/aod-design-tokens.md */
+
+@theme {
+  /* Brand palette */
+  --color-warm-gold: #d4a843;
+  --color-revolutionary-red: #c23b22;
+  --color-movement-teal: #2a7b88;
+  --color-deep-charcoal: #1a1a1a;
+  --color-parchment: #f5edd6;
+  --color-earth-brown: #6b4226;
+
+  /* Semantic aliases */
+  --color-primary: var(--color-revolutionary-red);
+  --color-secondary: var(--color-warm-gold);
+  --color-tertiary: var(--color-movement-teal);
+  --color-surface: var(--color-parchment);
+  --color-surface-dark: var(--color-deep-charcoal);
+
+  /* Category chip colors */
+  --color-category-artists: var(--color-warm-gold);
+  --color-category-movements: var(--color-revolutionary-red);
+  --color-category-organizations: var(--color-movement-teal);
+  --color-category-people: var(--color-earth-brown);
+
+  /* Typography */
+  --font-headline: "Montserrat", "Epilogue", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-label: "Newsreader", Georgia, serif;
+
+  /* Radius */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+}
+
+/* Custom gradients and effects */
+
+.sunburst-bg {
+  background: radial-gradient(circle at center, rgba(212, 168, 67, 0.15) 0%, transparent 70%);
+}
+
+.hero-gradient {
+  background: linear-gradient(
+    to top,
+    rgba(26, 26, 26, 0.95) 0%,
+    rgba(26, 26, 26, 0.4) 50%,
+    transparent 100%
+  );
+}
+
+/* Base typography */
+
+html {
+  font-family: var(--font-body);
+  color: var(--color-deep-charcoal);
+  background-color: #fcf9f8;
+}
+
+body {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headline);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+}

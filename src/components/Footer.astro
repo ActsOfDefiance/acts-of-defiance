@@ -1,0 +1,33 @@
+---
+const footerLinks = [
+  { label: "About", href: "/about" },
+  { label: "Artists", href: "/artists" },
+  { label: "Movements", href: "/movements" },
+  { label: "Organizations", href: "/organizations" },
+  { label: "People", href: "/people" },
+];
+---
+
+<footer class="bg-deep-charcoal text-white py-16 px-8">
+  <div class="max-w-4xl mx-auto text-center space-y-8">
+    <p
+      class="text-2xl md:text-3xl italic text-warm-gold"
+      style="font-family: var(--font-label)"
+    >
+      Remembering those whose very existence defied injustice.
+    </p>
+    <nav class="flex flex-wrap justify-center gap-8 text-sm">
+      {
+        footerLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-white/70 hover:text-warm-gold transition-colors uppercase tracking-wide"
+            style="font-family: var(--font-headline)"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</footer>

@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Acts of Defiance"
+  description="Remembering those whose very existence defied injustice."
+>
+  <section
+    class="relative w-full min-h-[80vh] flex items-center justify-center bg-deep-charcoal overflow-hidden"
+  >
+    <div class="sunburst-bg absolute inset-0"></div>
+    <div class="relative z-10 text-center px-8 max-w-4xl space-y-6">
+      <h1
+        class="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-none tracking-tighter uppercase"
+        style="font-family: var(--font-headline)"
+      >
+        Defiance is an act of hope.
+      </h1>
+      <p class="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
+        Remembering those whose very existence defied injustice.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-24 px-8 bg-parchment">
+    <div class="max-w-4xl mx-auto text-center space-y-4">
+      <p
+        class="text-2xl italic text-earth-brown"
+        style="font-family: var(--font-label)"
+      >
+        Every movement started with someone who refused.
+      </p>
+      <p class="text-base text-deep-charcoal/70">
+        This story hasn't been told yet. Content will flow here from dime.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
