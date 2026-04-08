@@ -16,20 +16,20 @@ const { Content } = await render(entry);
   title="About"
   description={entry.data.tagline}
   mainClass=""
-  bodyClass="bg-[#fff9ec]"
+  bodyClass="bg-background-warm"
 >
   <!-- Cinematic hero — slides behind fixed nav, same treatment as the article page -->
   <header slot="hero" class="relative w-full aspect-[21/9] overflow-hidden bg-surface-container-highest">
     <div class="absolute inset-0 sunburst-bg opacity-40"></div>
     <div class="absolute inset-0 flex items-center justify-center">
       <span
-        class="text-[20vw] font-black uppercase leading-none text-[#d4a843]/20 select-none"
+        class="text-[20vw] font-black uppercase leading-none text-warm-gold/20 select-none"
         style="font-family: var(--font-headline)"
       >
         AoD
       </span>
     </div>
-    <div class="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-deep-charcoal via-transparent to-transparent"></div>
   </header>
 
   <!-- Main content overlaps hero by 24 -->
@@ -40,14 +40,14 @@ const { Content } = await render(entry);
       <div class="flex flex-col items-start gap-4">
         <!-- Headline -->
         <h1
-          class="uppercase tracking-tighter max-w-4xl text-[#1c1b1b]"
+          class="uppercase tracking-tighter max-w-4xl text-deep-charcoal"
           style="font-family: var(--font-headline); font-size: var(--text-h1); line-height: 1"
         >
           {entry.data.title}
         </h1>
         <!-- Tagline -->
         <p
-          class="italic text-[#4e4636] max-w-3xl"
+          class="italic text-on-surface-variant max-w-3xl"
           style="font-family: var(--font-label); font-size: var(--text-body-lg)"
         >
           {entry.data.tagline}
@@ -56,14 +56,14 @@ const { Content } = await render(entry);
     </div>
 
     <!-- Manifesto body — shared Prose component (no page-level scoped CSS) -->
-    <article class="bg-[#F5EDD6] py-16 md:py-24 px-6 md:px-0">
+    <article class="bg-parchment py-16 md:py-24 px-6 md:px-0">
       <Prose>
         <Content />
       </Prose>
     </article>
 
     <!-- What we cover — category tile grid -->
-    <section class="py-24 border-t border-[#d2c5b1]">
+    <section class="py-24 border-t border-outline-variant">
       <SectionHead variant="editorial" class="mb-12 text-center">
         What we cover
       </SectionHead>

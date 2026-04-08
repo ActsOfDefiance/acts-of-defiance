@@ -30,7 +30,9 @@ const related = allArticles
 const badge = badgeStyle(article.data.category);
 const tintFor = (slug: string) => {
   const cat = CATEGORIES[slug as CategorySlug];
-  return cat ? `background:${cat.accent}` : "background:#1a1a1a";
+  // Fallback references the deep-charcoal token via its CSS custom property
+  // so there is no literal hex anywhere in the page.
+  return cat ? `background:${cat.accent}` : "background:var(--color-deep-charcoal)";
 };
 
 const dateStr = article.data.date.toLocaleDateString("en-US", {
@@ -40,7 +42,7 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
 });
 ---
 
-<BaseLayout title={article.data.title} description={article.data.description} mainClass="" bodyClass="bg-[#fff9ec]">
+<BaseLayout title={article.data.title} description={article.data.description} mainClass="" bodyClass="bg-background-warm">
 
   <!-- Cinematic hero: aspect-[21/9], slides behind fixed nav -->
   <header slot="hero" class="relative w-full aspect-[21/9] overflow-hidden bg-surface-container-highest">
@@ -61,7 +63,7 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
         </span>
       </div>
     )}
-    <div class="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-deep-charcoal via-transparent to-transparent"></div>
   </header>
 
   <!-- Main content overlaps hero by 24 -->
@@ -107,33 +109,37 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
         </div>
       </div>
 
-      <!-- Content version selector -->
-      <div class="flex gap-4 mt-12 border-t border-[#d2c5b1] pt-8">
+      <!--
+        Content version selector — UI scaffolding only. The Short Read /
+        Deep Dive split ships when dime emits the short version; for now
+        Deep Dive is the only content variant. See ticket for details.
+      -->
+      <div class="flex gap-4 mt-12 border-t border-outline-variant pt-8">
         <!-- Short Read (inactive) -->
-        <div class="flex-1 text-left p-6 bg-[#f6eed7] text-[#1f1c0e] cursor-default">
+        <div class="flex-1 text-left p-6 bg-surface-container text-on-surface cursor-default">
           <div class="uppercase font-bold tracking-widest opacity-60 mb-2" style="font-family: var(--font-headline); font-size: var(--text-caption)">
             Short Read
           </div>
           <div class="font-bold leading-tight" style="font-family: var(--font-headline); font-size: var(--text-body-lg)">
             The Story
           </div>
-          <div class="h-1 w-0 bg-[#d4a843] mt-4"></div>
+          <div class="h-1 w-0 bg-primary-container mt-4"></div>
         </div>
         <!-- Deep Dive (active) -->
-        <div class="flex-1 text-left p-6 bg-white border-b-4 border-[#d4a843] shadow-md cursor-default">
-          <div class="uppercase font-bold tracking-widest text-[#795900] mb-2" style="font-family: var(--font-headline); font-size: var(--text-caption)">
+        <div class="flex-1 text-left p-6 bg-white border-b-4 border-primary-container shadow-md cursor-default">
+          <div class="uppercase font-bold tracking-widest text-primary-md mb-2" style="font-family: var(--font-headline); font-size: var(--text-caption)">
             Full Research
           </div>
-          <div class="font-bold leading-tight text-[#1f1c0e]" style="font-family: var(--font-headline); font-size: var(--text-body-lg)">
+          <div class="font-bold leading-tight text-on-surface" style="font-family: var(--font-headline); font-size: var(--text-body-lg)">
             Deep Dive
           </div>
-          <div class="h-1 w-full bg-[#d4a843] mt-4"></div>
+          <div class="h-1 w-full bg-primary-container mt-4"></div>
         </div>
       </div>
     </div>
 
     <!-- Article body: parchment background -->
-    <article class="bg-[#F5EDD6] py-16 md:py-24 px-6 md:px-0">
+    <article class="bg-parchment py-16 md:py-24 px-6 md:px-0">
       <Prose>
         <Content />
       </Prose>

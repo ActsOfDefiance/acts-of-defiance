@@ -12,6 +12,16 @@
   --color-parchment: #f5edd6;
   --color-earth-brown: #795548; /* matches People category accent in src/lib/categories.ts and the v2 comps */
 
+  /* Page background tokens — the site has two distinct body backgrounds:
+   *   --color-background      neutral cream, used by home page (under the
+   *                           parchment-texture image overlay) and as the
+   *                           default html background.
+   *   --color-background-warm warmer cream, used by the article and about
+   *                           pages (matches bg-background in the v2
+   *                           article comp's MD3 palette). */
+  --color-background: #fcf9f8;
+  --color-background-warm: #fff9ec;
+
   /* Semantic aliases */
   --color-primary: var(--color-revolutionary-red);
   --color-secondary: var(--color-warm-gold);
@@ -39,11 +49,20 @@
   --color-secondary-md: #006a6a;         /* teal — People badge in some comps */
   --color-on-secondary-md: #ffffff;
 
-  /* Category chip colors */
-  --color-category-artists: var(--color-warm-gold);
-  --color-category-movements: var(--color-revolutionary-red);
-  --color-category-organizations: var(--color-movement-teal);
-  --color-category-people: var(--color-earth-brown);
+  /* Lighter container variants from the v2 category comp — used by the
+   * ArticleCard PLACEHOLDER_PALETTE 6-color cycle to visually vary a
+   * grid of same-category cards. */
+  --color-primary-container-light: #e57b66;   /* lighter red */
+  --color-tertiary-container-light: #7fb5be;  /* lighter teal */
+  --color-secondary-container-light: #fece65; /* lighter gold */
+
+  /* Category accent colors are defined as the single source of truth in
+   * src/lib/categories.ts. There is intentionally no `--color-category-*`
+   * CSS token — use `CATEGORIES[slug].accent` from categories.ts or the
+   * `badgeStyle()` helper instead. */
+
+  /* Layout tokens */
+  --header-height: 72px;
 
   /* Typography — see docs/specs/typography.md
    *
@@ -104,12 +123,12 @@
 }
 
 .parchment-texture {
-  background-color: #fcf9f8;
+  background-color: var(--color-background);
   background-image: url("/parchment-texture.png");
 }
 
 .parchment-texture-category {
-  background-color: #f5edd6;
+  background-color: var(--color-parchment);
   background-image: url("/parchment-texture-category.png");
 }
 
@@ -132,7 +151,7 @@
 html {
   font-family: var(--font-body);
   color: var(--color-deep-charcoal);
-  background-color: #fcf9f8;
+  background-color: var(--color-background);
 }
 
 body {

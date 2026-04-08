@@ -19,7 +19,7 @@ const articles = (await getCollection("articles", ({ data }) => !data.draft))
     <div class="absolute inset-0 hero-gradient flex flex-col justify-end px-8 md:px-16 pb-16">
       <div class="max-w-4xl space-y-6">
         <span
-          class="inline-block bg-[#2a7b88] text-white px-4 py-1 rounded-full font-bold uppercase tracking-widest"
+          class="inline-block bg-tertiary text-white px-4 py-1 rounded-full font-bold uppercase tracking-widest"
           style="font-family: var(--font-headline); font-size: var(--text-caption)"
         >
           Manifesto
@@ -38,7 +38,7 @@ const articles = (await getCollection("articles", ({ data }) => !data.draft))
         <div class="pt-4">
           <a
             href="/about"
-            class="inline-flex items-center gap-2 bg-[#c23b22] text-white px-8 py-4 rounded-lg font-black uppercase tracking-widest hover:bg-opacity-90 transition-all active:scale-95 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#D4A843]"
+            class="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-lg font-black uppercase tracking-widest hover:bg-opacity-90 transition-all active:scale-95 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-warm-gold"
             style="font-family: var(--font-headline); font-size: var(--text-caption)"
           >
             Read the Manifesto
@@ -52,7 +52,7 @@ const articles = (await getCollection("articles", ({ data }) => !data.draft))
   <!-- Recent Articles Feed -->
   <section class="py-24 px-8 md:px-16">
     <div class="max-w-7xl mx-auto">
-      <div class="mb-12 border-b-4 border-[#c23b22] pb-4">
+      <div class="mb-12 border-b-4 border-primary pb-4">
         <SectionHead variant="editorial">Recent stories</SectionHead>
       </div>
 

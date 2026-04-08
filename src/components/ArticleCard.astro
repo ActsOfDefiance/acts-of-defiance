@@ -10,15 +10,17 @@ interface Props {
   variant?: number;
 }
 
-// Six-color cycle from the comp's category page — alternates through
-// the brand palette so a grid of same-category cards reads visually varied.
+// Six-color cycle from the v2 category comp — alternates through the
+// brand palette so a grid of same-category cards reads visually varied.
+// Values are CSS var references so the palette stays in sync with the
+// design tokens in global.css @theme.
 const PLACEHOLDER_PALETTE = [
-  "#c23b22", // primary red
-  "#2a7b88", // tertiary teal
-  "#795900", // secondary amber
-  "#e57b66", // primary-container (lighter red)
-  "#7fb5be", // tertiary-container (lighter teal)
-  "#fece65", // secondary-container (lighter gold)
+  "var(--color-primary)",                   // primary red (revolutionary-red)
+  "var(--color-tertiary)",                  // tertiary teal (movement-teal)
+  "var(--color-primary-md)",                // secondary amber
+  "var(--color-primary-container-light)",   // lighter red
+  "var(--color-tertiary-container-light)",  // lighter teal
+  "var(--color-secondary-container-light)", // lighter gold
 ];
 
 const { article, bordered = false, variant } = Astro.props;
@@ -26,7 +28,7 @@ const cat = CATEGORIES[article.data.category as CategorySlug];
 const placeholderBg =
   variant !== undefined
     ? PLACEHOLDER_PALETTE[variant % PLACEHOLDER_PALETTE.length]
-    : (cat?.accent ?? "#1a1a1a");
+    : (cat?.accent ?? "var(--color-deep-charcoal)");
 ---
 
 <a
