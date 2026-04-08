@@ -9,20 +9,25 @@ export async function getStaticPaths() {
   // Exclude drafts — drafts must not be reachable at /articles/[slug] in
   // production builds. Matches the filter used by home and category pages.
   const articles = await getCollection("articles", ({ data }) => !data.draft);
+
+  // Compute the related-articles list here once per path so it can be
+  // passed as a prop. Otherwise the article page would re-fetch and
+  // re-filter the entire collection for each static page at render time.
   return articles.map((article) => ({
     params: { slug: article.id },
-    props: { article },
+    props: {
+      article,
+      related: articles
+        .filter((a) => a.id !== article.id && a.data.category === article.data.category)
+        .slice(0, 3),
+    },
   }));
 }
 
-const { article } = Astro.props;
+// Default `related` to an empty array so the page renders safely if the
+// dev server's content collection cache goes stale between HMR passes.
+const { article, related = [] } = Astro.props;
 const { Content } = await render(article);
-
-// Related articles — same category, excluding self
-const allArticles = await getCollection("articles", ({ data }) => !data.draft);
-const related = allArticles
-  .filter((a) => a.id !== article.id && a.data.category === article.data.category)
-  .slice(0, 3);
 
 // Single source of truth for badge + tint comes from src/lib/categories.ts.
 // `badge` is the inline-style string for the category pill; `tintFor()` returns

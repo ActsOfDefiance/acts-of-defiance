@@ -119,7 +119,11 @@
 /* Custom gradients and effects */
 
 .sunburst-bg {
-  background: repeating-conic-gradient(from 0deg, transparent 0deg 10deg, rgba(212, 168, 67, 0.1) 10deg 20deg);
+  background: repeating-conic-gradient(
+    from 0deg,
+    transparent 0deg 10deg,
+    color-mix(in srgb, var(--color-warm-gold) 10%, transparent) 10deg 20deg
+  );
 }
 
 .parchment-texture {
@@ -135,8 +139,8 @@
 .hero-gradient {
   background: linear-gradient(
     to top,
-    rgba(26, 26, 26, 0.95) 0%,
-    rgba(26, 26, 26, 0.4) 50%,
+    color-mix(in srgb, var(--color-deep-charcoal) 95%, transparent) 0%,
+    color-mix(in srgb, var(--color-deep-charcoal) 40%, transparent) 50%,
     transparent 100%
   );
 }

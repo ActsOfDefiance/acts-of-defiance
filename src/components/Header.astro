@@ -1,9 +1,14 @@
 ---
+import { CATEGORY_LIST } from "../lib/categories";
+
+// Nav items are derived from the single source of truth in
+// src/lib/categories.ts so the header, footer, and any future nav
+// surface stay in sync. About is appended at the end.
 const navItems = [
-  { label: "Artists", href: "/categories/artists" },
-  { label: "Movements", href: "/categories/movements" },
-  { label: "Organizations", href: "/categories/organizations" },
-  { label: "People", href: "/categories/people" },
+  ...CATEGORY_LIST.map((cat) => ({
+    label: cat.name,
+    href: `/categories/${cat.slug}`,
+  })),
   { label: "About", href: "/about" },
 ];
 

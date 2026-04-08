@@ -57,6 +57,9 @@ export const CATEGORY_LIST: Category[] = Object.values(CATEGORIES);
 /** Inline-style string for badge chips: `style={badgeStyle("people")}`. */
 export function badgeStyle(slug: string): string {
   const cat = CATEGORIES[slug as CategorySlug];
-  if (!cat) return "background:#1a1a1a;color:#fff";
+  // Fallback uses the deep-charcoal CSS var so there's no hardcoded
+  // brand color; the category `accent` literals above are intentionally
+  // not token references because this file is the source of truth.
+  if (!cat) return "background:var(--color-deep-charcoal);color:#fff";
   return `background:${cat.accent};color:${cat.accentText}`;
 }
