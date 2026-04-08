@@ -23,4 +23,14 @@ const articles = defineCollection({
   }),
 });
 
-export const collections = { articles };
+// Static pages — about / manifesto. Single-entry collection so the
+// page body is editable in markdown without touching the .astro file.
+const about = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/about" }),
+  schema: z.object({
+    title: z.string(),
+    tagline: z.string(),
+  }),
+});
+
+export const collections = { articles, about };

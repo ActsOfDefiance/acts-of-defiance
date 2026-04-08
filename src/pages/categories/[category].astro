@@ -1,0 +1,114 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import { CATEGORY_LIST, type CategorySlug } from "../../lib/categories";
+
+export async function getStaticPaths() {
+  return CATEGORY_LIST.map((cat) => ({
+    params: { category: cat.slug },
+    props: { category: cat },
+  }));
+}
+
+const { category } = Astro.props;
+
+const articles = (
+  await getCollection(
+    "articles",
+    ({ data }) => !data.draft && data.category === category.slug
+  )
+).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Unique tags across this category's articles, for the filter row
+const tagSet = new Set<string>();
+for (const article of articles) {
+  for (const tag of article.data.tags) tagSet.add(tag);
+}
+const tags = [...tagSet].sort();
+---
+
+<BaseLayout
+  title={category.name}
+  description={category.tagline}
+  mainClass="pt-16"
+  bodyClass="bg-[#fcf9f8]"
+>
+  <!-- Page header: parchment-textured block with massive category title + tag filter row -->
+  <header class="parchment-texture-category border-b border-[#e1bfb8]/30 pt-20 pb-16 px-6 md:px-12">
+    <div class="max-w-7xl mx-auto">
+      <h1
+        class="uppercase tracking-tighter mb-6"
+        style={`font-family: var(--font-headline); font-size: var(--text-display); line-height: 0.9; color:${category.accent}`}
+      >
+        {category.name}
+      </h1>
+      <p
+        class="font-medium text-[#1c1b1b] max-w-3xl leading-snug mb-12"
+        style="font-family: var(--font-body); font-size: var(--text-body-lg)"
+      >
+        {category.tagline}
+      </p>
+
+      <!-- Tag filter row -->
+      <div class="flex flex-wrap gap-3" role="group" aria-label="Filter by tag">
+        <button
+          type="button"
+          class="px-6 py-2 bg-[#1c1b1b] text-[#fcf9f8] font-bold uppercase tracking-widest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c23b22]"
+          style="font-family: var(--font-headline); font-size: var(--text-caption)"
+          aria-pressed="true"
+        >
+          all
+        </button>
+        {tags.map((tag) => (
+          <button
+            type="button"
+            class="px-6 py-2 bg-[#eae7e7] text-[#59413c] font-bold uppercase tracking-widest hover:bg-[#2a7b88] hover:text-white transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c23b22]"
+            style="font-family: var(--font-headline); font-size: var(--text-caption)"
+            aria-pressed="false"
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+    </div>
+  </header>
+
+  <!-- Article feed -->
+  <section class="max-w-7xl mx-auto px-6 md:px-12 py-20">
+    {articles.length === 0 ? (
+      <div class="py-24 text-center">
+        <p
+          class="italic text-[#1c1b1b]/60"
+          style="font-family: var(--font-label); font-size: var(--text-body-lg)"
+        >
+          No {category.name.toLowerCase()} stories yet.
+        </p>
+        <p class="mt-4 text-[#1c1b1b]/50" style="font-size: var(--text-body)">
+          Content will flow here from dime.
+        </p>
+      </div>
+    ) : (
+      <>
+        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 list-none p-0">
+          {articles.map((article, i) => (
+            <li>
+              <ArticleCard article={article} bordered variant={i} />
+            </li>
+          ))}
+        </ul>
+
+        <!-- Load more (placeholder until pagination is wired) -->
+        <div class="mt-24 flex justify-center">
+          <button
+            type="button"
+            class="px-12 py-4 border-2 border-[#1c1b1b] text-[#1c1b1b] font-black uppercase tracking-widest hover:bg-[#1c1b1b] hover:text-[#fcf9f8] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c23b22]"
+            style="font-family: var(--font-headline); font-size: var(--text-caption)"
+          >
+            Load More Archives
+          </button>
+        </div>
+      </>
+    )}
+  </section>
+</BaseLayout>

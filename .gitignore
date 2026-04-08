@@ -22,3 +22,19 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Docs are symlinked in from a sibling repo and tracked there, not here.
+docs/
+
+# Reference screenshots / scratch
+foobar/
+
+# Playwright session cache
+.playwright-mcp/
+
+# Root-level test screenshots from local visual verification runs
+/about-pw.png
+/about-typography.png
+/cat-mobile.png
+/home-fixed.png
+/home-mobile.png
