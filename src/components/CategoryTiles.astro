@@ -1,0 +1,43 @@
+---
+// Four-up category tile grid lifted from ../art/comps/v3/home.html.
+// Each tile: solid accent bg, ghost icon in upper-right, smaller icon
+// upper-left, category name at the bottom. Used on the about page
+// (and intended for the home page newsletter section eventually).
+import { CATEGORY_LIST } from "../lib/categories";
+---
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  {CATEGORY_LIST.map((cat) => (
+    <a
+      href={`/categories/${cat.slug}`}
+      class="p-8 px-6 rounded-lg h-64 flex flex-col justify-between group cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all shadow-md relative overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-warm-gold"
+      style={`background:${cat.accent}`}
+      aria-label={`Browse ${cat.name}`}
+    >
+      <!-- Ghost icon — large, decorative, in the corner -->
+      <div class="absolute -right-8 -top-8 opacity-20 group-hover:opacity-30 transition-opacity" aria-hidden="true">
+        <span
+          class="material-symbols-outlined text-[120px]"
+          style="font-variation-settings: 'FILL' 1;"
+        >
+          {cat.icon}
+        </span>
+      </div>
+      <!-- Front icon -->
+      <div class="relative z-10" aria-hidden="true">
+        <span
+          class="material-symbols-outlined text-4xl text-white block"
+          style="font-variation-settings: 'FILL' 1;"
+        >
+          {cat.icon}
+        </span>
+      </div>
+      <h3
+        class="font-bold text-white uppercase tracking-tight leading-none relative z-10 truncate"
+        style="font-family: var(--font-headline); font-size: var(--text-body-lg)"
+      >
+        {cat.name}
+      </h3>
+    </a>
+  ))}
+</div>

@@ -1,0 +1,126 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import { CATEGORY_LIST } from "../../lib/categories";
+
+export async function getStaticPaths() {
+  return CATEGORY_LIST.map((cat) => ({
+    params: { category: cat.slug },
+    props: { category: cat },
+  }));
+}
+
+const { category } = Astro.props;
+
+const articles = (
+  await getCollection(
+    "articles",
+    ({ data }) => !data.draft && data.category === category.slug
+  )
+).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Unique tags across this category's articles, for the filter row
+const tagSet = new Set<string>();
+for (const article of articles) {
+  for (const tag of article.data.tags) tagSet.add(tag);
+}
+const tags = [...tagSet].sort();
+---
+
+<BaseLayout
+  title={category.name}
+  description={category.tagline}
+  mainClass="pt-16"
+  bodyClass="bg-surface"
+>
+  <!-- Page header: parchment-textured block with massive category title + tag filter row -->
+  <header class="parchment-texture-category border-b border-outline-variant/30 pt-20 pb-16 px-6 md:px-12">
+    <div class="max-w-7xl mx-auto">
+      <h1
+        class="uppercase tracking-tighter mb-6"
+        style={`font-family: var(--font-headline); font-size: var(--text-display); line-height: 0.9; color:${category.accent}`}
+      >
+        {category.name}
+      </h1>
+      <p
+        class="font-medium text-deep-charcoal max-w-3xl leading-snug mb-12"
+        style="font-family: var(--font-body); font-size: var(--text-body-lg)"
+      >
+        {category.tagline}
+      </p>
+
+      <!--
+        Tag filter row — UI scaffolding only. Filtering logic ships in a
+        future ticket. The buttons are `disabled` so they're inert and
+        properly conveyed as such to assistive technologies (the
+        `disabled` attribute handles aria semantics by default).
+      -->
+      <div class="flex flex-wrap gap-3" role="group" aria-label="Filter by tag (coming soon)">
+        <button
+          type="button"
+          disabled
+          class="px-6 py-2 bg-deep-charcoal text-surface font-bold uppercase tracking-widest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-revolutionary-red opacity-90 cursor-not-allowed"
+          style="font-family: var(--font-headline); font-size: var(--text-caption)"
+          aria-pressed="true"
+        >
+          all
+        </button>
+        {tags.map((tag) => (
+          <button
+            type="button"
+            disabled
+            class="px-6 py-2 bg-surface-container-high text-on-surface-variant font-bold uppercase tracking-widest transition-colors duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-revolutionary-red opacity-60 cursor-not-allowed"
+            style="font-family: var(--font-headline); font-size: var(--text-caption)"
+            aria-pressed="false"
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+    </div>
+  </header>
+
+  <!-- Article feed -->
+  <section class="max-w-7xl mx-auto px-6 md:px-12 py-20">
+    {articles.length === 0 ? (
+      <div class="py-24 text-center">
+        <p
+          class="italic text-deep-charcoal/60"
+          style="font-family: var(--font-label); font-size: var(--text-body-lg)"
+        >
+          No {category.name.toLowerCase()} stories yet.
+        </p>
+        <p class="mt-4 text-deep-charcoal/50" style="font-size: var(--text-body)">
+          Content will flow here from dime.
+        </p>
+      </div>
+    ) : (
+      <>
+        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 list-none p-0">
+          {articles.map((article, i) => (
+            <li>
+              <ArticleCard article={article} bordered variant={i} />
+            </li>
+          ))}
+        </ul>
+
+        <!--
+          Load more — UI scaffolding only. Pagination ships in a future
+          ticket. Button is `disabled` until pagination is wired so it
+          can't trap keyboard users in a dead-end interaction.
+        -->
+        <div class="mt-24 flex justify-center">
+          <button
+            type="button"
+            disabled
+            class="px-12 py-4 border-2 border-deep-charcoal text-deep-charcoal font-black uppercase tracking-widest opacity-50 cursor-not-allowed transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-revolutionary-red"
+            style="font-family: var(--font-headline); font-size: var(--text-caption)"
+          >
+            Load More Archives
+          </button>
+        </div>
+      </>
+    )}
+  </section>
+</BaseLayout>

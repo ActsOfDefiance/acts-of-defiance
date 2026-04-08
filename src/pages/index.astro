@@ -1,0 +1,74 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+import SectionHead from "../components/SectionHead.astro";
+
+const articles = (await getCollection("articles", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout
+  title="Acts of Defiance"
+  description="Remembering those whose very existence defied injustice."
+  mainClass=""
+  bodyClass="parchment-texture"
+>
+  <!-- Hero Section: cinematic. Extends behind fixed header (h = 768 + 64) so no parchment gap shows. -->
+  <section class="relative w-full h-[832px] min-h-[564px] overflow-hidden bg-black">
+    <div class="absolute inset-0 hero-gradient flex flex-col justify-end px-8 md:px-16 pb-16">
+      <div class="max-w-4xl space-y-6">
+        <span
+          class="inline-block bg-tertiary text-white px-4 py-1 rounded-full font-bold uppercase tracking-widest"
+          style="font-family: var(--font-headline); font-size: var(--text-caption)"
+        >
+          Manifesto
+        </span>
+        <h1
+          class="text-white tracking-tighter uppercase max-w-[12ch]"
+          style="font-family: var(--font-headline); font-size: var(--text-h1); line-height: 0.95"
+        >
+          Defiance is an act of hope.
+        </h1>
+        <p class="text-gray-200 max-w-2xl leading-relaxed" style="font-size: var(--text-body-lg)">
+          Remembering those whose very existence defied injustice — artists,
+          organizers, movements, and ordinary people whose existence was itself
+          a form of resistance.
+        </p>
+        <div class="pt-4">
+          <a
+            href="/about"
+            class="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-lg font-black uppercase tracking-widest hover:bg-opacity-90 transition-all active:scale-95 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-warm-gold"
+            style="font-family: var(--font-headline); font-size: var(--text-caption)"
+          >
+            Read the Manifesto
+            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" aria-hidden="true">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Articles Feed -->
+  <section class="py-24 px-8 md:px-16">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-12 border-b-4 border-primary pb-4">
+        <SectionHead variant="editorial">Recent stories</SectionHead>
+      </div>
+
+      {articles.length === 0 ? (
+        <p class="text-center text-deep-charcoal/50 py-16 italic" style="font-family: var(--font-label)">
+          Content will flow here from dime.
+        </p>
+      ) : (
+        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 list-none p-0">
+          {articles.map((article) => (
+            <li>
+              <ArticleCard article={article} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+</BaseLayout>
