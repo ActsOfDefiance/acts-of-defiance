@@ -64,13 +64,14 @@ function isActive(href: string) {
       return (
         <a
           href={item.href}
-          class={[
+          class:list={[
             "font-medium tracking-wide uppercase transition-colors rounded-sm",
             "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-warm-gold",
-            active
-              ? "text-warm-gold border-b-2 border-warm-gold pb-0.5"
-              : "text-white hover:text-warm-gold",
-          ].join(" ")}
+            {
+              "text-warm-gold border-b-2 border-warm-gold pb-0.5": active,
+              "text-white hover:text-warm-gold": !active,
+            },
+          ]}
           style="font-family: var(--font-headline); font-size: var(--text-caption)"
           aria-current={active ? "page" : undefined}
         >
@@ -110,11 +111,14 @@ function isActive(href: string) {
       return (
         <a
           href={item.href}
-          class={[
+          class:list={[
             "flex items-center px-8 py-4 font-medium tracking-wide uppercase transition-colors border-b border-white/10",
             "focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-warm-gold",
-            active ? "text-warm-gold" : "text-white hover:text-warm-gold hover:bg-white/5",
-          ].join(" ")}
+            {
+              "text-warm-gold": active,
+              "text-white hover:text-warm-gold hover:bg-white/5": !active,
+            },
+          ]}
           style="font-family: var(--font-headline); font-size: var(--text-caption)"
           aria-current={active ? "page" : undefined}
         >

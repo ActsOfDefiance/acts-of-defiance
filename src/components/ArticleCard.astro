@@ -36,10 +36,13 @@ const placeholderBg =
   class="flex flex-col gap-6 group cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-revolutionary-red rounded-sm"
 >
   <div
-    class={[
+    class:list={[
       "aspect-[4/5] overflow-hidden relative",
-      bordered ? "border-4 border-deep-charcoal" : "rounded-lg shadow-xl",
-    ].join(" ")}
+      {
+        "border-4 border-deep-charcoal": bordered,
+        "rounded-lg shadow-xl": !bordered,
+      },
+    ]}
     style={`background:${placeholderBg}`}
   >
     {article.data.images?.hero ? (
