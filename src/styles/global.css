@@ -10,7 +10,7 @@
   --color-movement-teal: #2a7b88;
   --color-deep-charcoal: #1a1a1a;
   --color-parchment: #f5edd6;
-  --color-earth-brown: #6b4226;
+  --color-earth-brown: #795548; /* matches People category accent in src/lib/categories.ts and the v2 comps */
 
   /* Semantic aliases */
   --color-primary: var(--color-revolutionary-red);
@@ -29,11 +29,14 @@
   --color-on-surface-variant: #4e4636;
   --color-outline-variant: #d2c5b1;
 
-  /* MD3 primary/secondary/tertiary — comp mapping */
-  --color-primary: #795900;           /* amber — section headings, active state */
-  --color-primary-container: #d4a843; /* gold — blockquote border, active indicator */
-  --color-on-primary: #ffffff;
-  --color-secondary-md: #006a6a;      /* teal — People badge */
+  /* Material Design 3 primary/secondary tokens used by some comps.
+   * These use the `-md` suffix to AVOID colliding with the brand semantic
+   * aliases (`--color-primary` etc.) defined above. The brand `--color-primary`
+   * means revolutionary-red; the MD3 `--color-primary-md` means amber. */
+  --color-primary-md: #795900;           /* amber — used by article comp prose accent */
+  --color-primary-container: #d4a843;    /* gold — blockquote border, active indicator */
+  --color-on-primary-md: #ffffff;
+  --color-secondary-md: #006a6a;         /* teal — People badge in some comps */
   --color-on-secondary-md: #ffffff;
 
   /* Category chip colors */
@@ -47,7 +50,15 @@
    * Type scale: Augmented Fourth (ratio √2 ≈ 1.4142)
    * Base: 16px (min) → 18px (max)
    * Viewport range for fluid scale: 320px → 1440px
-   * Every step is base × ratio^n. No hand-tuned values.
+   *
+   * Two clamp philosophies:
+   *   - Body steps (caption, body, body-lg) use modest clamps with both
+   *     endpoints on the modular scale.
+   *   - Heading steps (h4, h3, h2, h1, display) use aggressive clamps where
+   *     the MAX stays on the Augmented Fourth scale but the MIN is sized
+   *     empirically to fit headline text at 320px viewport without
+   *     horizontal overflow. The modular scale governs the max; the
+   *     narrow-viewport constraint governs the min.
    *
    * Steps available as Tailwind utilities: text-caption, text-body, text-body-lg,
    * text-h4, text-h3, text-h2, text-h1, text-display.

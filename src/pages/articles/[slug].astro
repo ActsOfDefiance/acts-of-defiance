@@ -3,9 +3,12 @@ import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Prose from "../../components/Prose.astro";
 import SectionHead from "../../components/SectionHead.astro";
+import { CATEGORIES, badgeStyle, type CategorySlug } from "../../lib/categories";
 
 export async function getStaticPaths() {
-  const articles = await getCollection("articles");
+  // Exclude drafts — drafts must not be reachable at /articles/[slug] in
+  // production builds. Matches the filter used by home and category pages.
+  const articles = await getCollection("articles", ({ data }) => !data.draft);
   return articles.map((article) => ({
     params: { slug: article.id },
     props: { article },
@@ -21,21 +24,13 @@ const related = allArticles
   .filter((a) => a.id !== article.id && a.data.category === article.data.category)
   .slice(0, 3);
 
-// Category badge — same mapping used on the home page for consistency
-const badgeCss: Record<string, string> = {
-  artists:       "background:#795900;color:#fff", // amber
-  movements:     "background:#c23b22;color:#fff", // red
-  organizations: "background:#2a7b88;color:#fff", // teal
-  people:        "background:#795548;color:#fff", // brown
-};
-const badge = badgeCss[article.data.category] ?? "background:#1a1a1a;color:#fff";
-
-// Related card overlay tints per category
-const cardTint: Record<string, string> = {
-  artists:       "background:#795900",
-  movements:     "background:#c23b22",
-  organizations: "background:#2a7b88",
-  people:        "background:#795548",
+// Single source of truth for badge + tint comes from src/lib/categories.ts.
+// `badge` is the inline-style string for the category pill; `tintFor()` returns
+// the related-card overlay tint. No local color mapping — see categories.ts.
+const badge = badgeStyle(article.data.category);
+const tintFor = (slug: string) => {
+  const cat = CATEGORIES[slug as CategorySlug];
+  return cat ? `background:${cat.accent}` : "background:#1a1a1a";
 };
 
 const dateStr = article.data.date.toLocaleDateString("en-US", {
@@ -59,8 +54,8 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
     ) : (
       <div class="absolute inset-0 flex items-center justify-center">
         <span
-          class="text-[20vw] font-black uppercase leading-none text-[#d4a843]/20 select-none"
-          style="font-family: var(--font-montserrat)"
+          class="text-[20vw] font-black uppercase leading-none text-warm-gold/20 select-none"
+          style="font-family: var(--font-headline)"
         >
           AoD
         </span>
@@ -81,7 +76,7 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
           class="px-4 py-1 font-black uppercase tracking-widest rounded-full"
           style={`font-family: var(--font-headline); font-size: var(--text-caption); ${badge}`}
         >
-          {article.data.category}
+          {CATEGORIES[article.data.category as CategorySlug]?.name ?? article.data.category}
         </span>
 
         <!-- Headline -->
@@ -152,8 +147,9 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           {related.map((rel) => {
-            const tint = cardTint[rel.data.category] ?? "background:#1a1a1a";
-            const relBadge = badgeCss[rel.data.category] ?? "background:#1a1a1a;color:#fff";
+            const tint = tintFor(rel.data.category);
+            const relBadge = badgeStyle(rel.data.category);
+            const relCat = CATEGORIES[rel.data.category as CategorySlug];
             return (
               <a href={`/articles/${rel.id}`} class="group cursor-pointer block">
                 <div class="aspect-[4/5] bg-surface-container-highest relative overflow-hidden mb-6">
@@ -165,7 +161,7 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
                     />
                   ) : (
                     <div class="w-full h-full flex items-center justify-center">
-                      <span class="text-8xl font-black uppercase text-[#d4a843]/20 select-none" style="font-family: var(--font-montserrat)">AoD</span>
+                      <span class="text-8xl font-black uppercase text-warm-gold/20 select-none" style="font-family: var(--font-headline)">AoD</span>
                     </div>
                   )}
                   <div
@@ -177,7 +173,7 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
                       class="px-3 py-1 font-black uppercase tracking-widest rounded-none"
                       style={`font-family: var(--font-headline); font-size: var(--text-caption); ${relBadge}`}
                     >
-                      {rel.data.category}
+                      {relCat?.name ?? rel.data.category}
                     </span>
                     <h4
                       class="text-white uppercase mt-2 drop-shadow-lg"

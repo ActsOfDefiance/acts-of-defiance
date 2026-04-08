@@ -31,19 +31,19 @@ const placeholderBg =
 
 <a
   href={`/articles/${article.id}`}
-  class="flex flex-col gap-6 group cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c23b22] rounded-sm"
+  class="flex flex-col gap-6 group cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-revolutionary-red rounded-sm"
 >
   <div
     class={[
       "aspect-[4/5] overflow-hidden relative",
-      bordered ? "border-4 border-[#1c1b1b]" : "rounded-lg shadow-xl",
+      bordered ? "border-4 border-deep-charcoal" : "rounded-lg shadow-xl",
     ].join(" ")}
     style={`background:${placeholderBg}`}
   >
     {article.data.images?.hero ? (
       <img
         src={`/images/articles/${article.data.images.hero}`}
-        alt=""
+        alt={article.data.title}
         class="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-500"
       />
     ) : (
@@ -67,13 +67,13 @@ const placeholderBg =
   </div>
   <div class="space-y-3">
     <h3
-      class="uppercase tracking-tight text-[#1c1b1b] group-hover:text-[#c23b22] transition-colors"
+      class="uppercase tracking-tight text-deep-charcoal group-hover:text-revolutionary-red transition-colors"
       style="font-family: var(--font-headline); font-size: var(--text-h4); line-height: 1.05"
     >
       {article.data.title}
     </h3>
     <p
-      class="text-[#1c1b1b]/70 line-clamp-2 italic"
+      class="text-deep-charcoal/70 line-clamp-2 italic"
       style="font-family: var(--font-label); font-size: var(--text-body-lg); line-height: 1.4"
     >
       {article.data.description}
@@ -82,7 +82,7 @@ const placeholderBg =
       <div class="flex flex-wrap gap-2 pt-1">
         {article.data.tags.map((tag) => (
           <span
-            class="font-bold uppercase tracking-tighter text-[#1c1b1b]/60"
+            class="font-bold uppercase tracking-tighter text-deep-charcoal/60"
             style="font-size: var(--text-caption)"
           >
             #{tag}
