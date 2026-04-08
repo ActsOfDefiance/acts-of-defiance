@@ -1,0 +1,164 @@
+---
+const navItems = [
+  { label: "Artists", href: "/categories/artists" },
+  { label: "Movements", href: "/categories/movements" },
+  { label: "Organizations", href: "/categories/organizations" },
+  { label: "People", href: "/categories/people" },
+  { label: "About", href: "/about" },
+];
+
+const currentPath = Astro.url.pathname;
+
+function isActive(href: string) {
+  return currentPath === href || currentPath.startsWith(href + "/");
+}
+---
+
+<!-- Skip to main content — WCAG 2.2 AA SC 2.4.1 -->
+<a
+  href="#main-content"
+  class="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:top-4 focus-visible:left-4 focus-visible:z-[200] focus-visible:px-4 focus-visible:py-2 focus-visible:bg-[#D4A843] focus-visible:text-[#1A1A1A] focus-visible:font-black focus-visible:uppercase focus-visible:text-sm focus-visible:rounded-sm"
+  style="font-family: var(--font-headline)"
+>
+  Skip to content
+</a>
+
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-8 py-4 backdrop-blur-md bg-[#1A1A1A]/85">
+
+  <!-- Logo lockup -->
+  <a
+    href="/"
+    class="flex items-center gap-3 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#D4A843] rounded-sm"
+    aria-label="Acts of Defiance — home"
+  >
+    <!-- Icon with animated gold glow -->
+    <div class="relative w-10 h-10 flex items-center justify-center flex-shrink-0">
+      <div
+        class="absolute inset-0 bg-[#D4A843] opacity-20 rounded-full blur-sm group-hover:scale-125 transition-transform duration-500"
+        aria-hidden="true"
+      ></div>
+      <img
+        src="/logo_just_fist_cropped.png"
+        alt=""
+        aria-hidden="true"
+        class="w-8 h-8 object-contain relative z-10"
+      />
+    </div>
+    <span
+      class="text-xl font-black text-[#D4A843] tracking-tighter uppercase leading-none"
+      style="font-family: var(--font-headline)"
+    >
+      ACTS OF DEFIANCE
+    </span>
+  </a>
+
+  <!-- Desktop nav -->
+  <nav class="hidden md:flex items-center gap-8" aria-label="Main navigation">
+    {navItems.map((item) => {
+      const active = isActive(item.href);
+      return (
+        <a
+          href={item.href}
+          class={[
+            "font-medium tracking-wide uppercase transition-colors rounded-sm",
+            "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#D4A843]",
+            active
+              ? "text-[#D4A843] border-b-2 border-[#D4A843] pb-0.5"
+              : "text-white hover:text-[#D4A843]",
+          ].join(" ")}
+          style="font-family: var(--font-headline); font-size: var(--text-caption)"
+          aria-current={active ? "page" : undefined}
+        >
+          {item.label}
+        </a>
+      );
+    })}
+  </nav>
+
+  <!-- Mobile hamburger — WCAG 2.2 SC 2.5.8: min 24×24px touch target -->
+  <button
+    id="mobile-menu-btn"
+    type="button"
+    class="md:hidden text-white p-2 -mr-2 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D4A843]"
+    aria-label="Open navigation menu"
+    aria-expanded="false"
+    aria-controls="mobile-menu"
+  >
+    <span class="material-symbols-outlined text-3xl leading-none" aria-hidden="true">menu</span>
+  </button>
+
+</header>
+
+<!-- Mobile menu panel -->
+<div
+  id="mobile-menu"
+  class="fixed inset-x-0 top-[72px] z-40 bg-[#1A1A1A] hidden"
+  hidden
+>
+  <nav aria-label="Mobile navigation">
+    {navItems.map((item) => {
+      const active = isActive(item.href);
+      return (
+        <a
+          href={item.href}
+          class={[
+            "flex items-center px-8 py-4 font-medium tracking-wide uppercase transition-colors border-b border-white/10",
+            "focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-[#D4A843]",
+            active ? "text-[#D4A843]" : "text-white hover:text-[#D4A843] hover:bg-white/5",
+          ].join(" ")}
+          style="font-family: var(--font-headline); font-size: var(--text-caption)"
+          aria-current={active ? "page" : undefined}
+        >
+          {item.label}
+        </a>
+      );
+    })}
+  </nav>
+</div>
+
+<script>
+  const btn = document.getElementById("mobile-menu-btn") as HTMLButtonElement | null;
+  const menu = document.getElementById("mobile-menu") as HTMLElement | null;
+
+  if (btn && menu) {
+    function openMenu() {
+      menu!.hidden = false;
+      btn!.setAttribute("aria-expanded", "true");
+      btn!.setAttribute("aria-label", "Close navigation menu");
+      const icon = btn!.querySelector(".material-symbols-outlined");
+      if (icon) icon.textContent = "close";
+    }
+
+    function closeMenu() {
+      menu!.hidden = true;
+      btn!.setAttribute("aria-expanded", "false");
+      btn!.setAttribute("aria-label", "Open navigation menu");
+      const icon = btn!.querySelector(".material-symbols-outlined");
+      if (icon) icon.textContent = "menu";
+    }
+
+    btn.addEventListener("click", () => {
+      menu.hidden ? openMenu() : closeMenu();
+    });
+
+    // Close on Escape, return focus to trigger
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !menu.hidden) {
+        closeMenu();
+        btn.focus();
+      }
+    });
+
+    // Close on click outside
+    document.addEventListener("click", (e) => {
+      if (!menu.hidden && !menu.contains(e.target as Node) && !btn.contains(e.target as Node)) {
+        closeMenu();
+      }
+    });
+
+    // Close when a nav link is followed
+    menu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+  }
+</script>
