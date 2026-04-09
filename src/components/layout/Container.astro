@@ -10,10 +10,13 @@
 //   <Container width="hero">                 <!-- hero text block (896px) -->
 //   <Container width="reading">              <!-- long-form prose (700px) -->
 //   <Container as="section" class="py-section-y">
+//   <Container padded={false}>               <!-- no horizontal padding -->
 
 interface Props {
   /** Which max-width token to use. */
   width?: "reading" | "hero" | "content";
+  /** Whether to apply horizontal padding. Default: true. */
+  padded?: boolean;
   /** HTML element to render. Default: div. */
   as?: string;
   /** Extra classes appended after the layout classes. */
@@ -24,6 +27,7 @@ interface Props {
 
 const {
   width = "content",
+  padded = true,
   as: Tag = "div",
   class: className = "",
   ...rest
@@ -33,7 +37,7 @@ const widthClass = `max-w-${width}`;
 ---
 
 <Tag
-  class:list={[widthClass, "mx-auto px-container-x md:px-container-x-lg", className]}
+  class:list={[widthClass, "mx-auto", padded && "px-container-x md:px-container-x-lg", className]}
   {...rest}
 >
   <slot />

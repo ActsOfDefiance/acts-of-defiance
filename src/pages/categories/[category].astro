@@ -39,7 +39,7 @@ const tags = [...tagSet].sort();
 >
   <!-- Page header: parchment-textured block with massive category title + tag filter row -->
   <header class="parchment-texture-category border-b border-outline-variant/30 pt-section-y pb-2xl px-container-x md:px-container-x-lg">
-    <Container width="content" class="!px-0">
+    <Container width="content" padded={false}>
       <h1
         class="uppercase tracking-tighter mb-md"
         style={`font-family: var(--font-headline); font-size: var(--text-display); line-height: 0.9; color:${category.accent}`}
