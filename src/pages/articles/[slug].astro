@@ -78,9 +78,9 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
     <div class="bg-white p-lg md:p-xl shadow-sm">
       <div class="flex flex-col items-start gap-sm">
 
-        <!-- Category pill -->
+        <!-- Category pill — stamps in on page load via .motion-stamp-in -->
         <span
-          class="px-sm py-3xs font-black uppercase tracking-widest rounded-full"
+          class="motion-stamp-in px-sm py-3xs font-black uppercase tracking-widest rounded-full"
           style={`font-family: var(--font-headline); font-size: var(--text-caption); ${badge}`}
         >
           {CATEGORIES[article.data.category as CategorySlug]?.name ?? article.data.category}
@@ -162,13 +162,13 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
             const relBadge = badgeStyle(rel.data.category);
             const relCat = CATEGORIES[rel.data.category as CategorySlug];
             return (
-              <a href={`/articles/${rel.id}`} class="group cursor-pointer block">
+              <a href={`/articles/${rel.id}`} class="aod-brand-card aod-focus-ring group cursor-pointer block">
                 <div class="aspect-[4/5] bg-surface-container-highest relative overflow-hidden mb-md">
                   {rel.data.images?.hero ? (
                     <img
                       src={`/images/articles/${rel.data.images.hero}`}
                       alt={rel.data.title}
-                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      class="aod-brand-card__image w-full h-full object-cover"
                     />
                   ) : (
                     <div class="w-full h-full flex items-center justify-center">
@@ -176,8 +176,8 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
                     </div>
                   )}
                   <div
-                    class="absolute inset-0 mix-blend-multiply opacity-20 group-hover:opacity-0 transition-opacity"
-                    style={tint}
+                    class="absolute inset-0 mix-blend-multiply opacity-20 group-hover:opacity-0"
+                    style={`${tint}; transition: opacity var(--duration-quick) var(--ease-manifesto)`}
                   ></div>
                   <div class="absolute bottom-md left-md right-md">
                     <span
@@ -187,7 +187,7 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
                       {relCat?.name ?? rel.data.category}
                     </span>
                     <h4
-                      class="text-white uppercase mt-2xs drop-shadow-lg"
+                      class="aod-brand-card__title text-white uppercase mt-2xs drop-shadow-lg"
                       style="font-family: var(--font-headline); font-size: var(--text-h4); line-height: 1"
                     >
                       {rel.data.title}
