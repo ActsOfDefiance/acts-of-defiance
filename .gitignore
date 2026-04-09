@@ -32,9 +32,5 @@ foobar/
 # Playwright session cache
 .playwright-mcp/
 
-# Root-level test screenshots from local visual verification runs
-/about-pw.png
-/about-typography.png
-/cat-mobile.png
-/home-fixed.png
-/home-mobile.png
+# Root-level screenshots from local visual verification runs
+/*.png
