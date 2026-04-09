@@ -1,0 +1,446 @@
+---
+// Motion Lab — temporary scratch page for iterating on the motion system.
+// DO NOT MERGE. Removed before the feature/define-motion-system PR lands.
+// Purpose: let us eyeball proposed easings + durations + brand-coded
+// interactions side-by-side in the browser.
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const easings = [
+  { name: "stamp",     curve: "cubic-bezier(0.9, 0, 0.1, 1)",      desc: "Abrupt edges, fast middle — like a rubber stamp hitting paper" },
+  { name: "manifesto", curve: "cubic-bezier(0.16, 1, 0.3, 1)",     desc: "Default. Snaps in, decelerates long and deliberate" },
+  { name: "ink",       curve: "cubic-bezier(0.77, 0, 0.175, 1)",   desc: "Symmetric steep — ink soaking in and drying" },
+  { name: "defiant",   curve: "cubic-bezier(0.32, 1.12, 0.28, 1)", desc: "One firm push past, settles. Subtle overshoot" },
+];
+
+const durations = [
+  { name: "snap",    ms: 90  },
+  { name: "quick",   ms: 180 },
+  { name: "arrive",  ms: 320 },
+  { name: "declare", ms: 560 },
+];
+---
+
+<BaseLayout title="Motion Lab" description="Scratch page for motion system iteration" bodyClass="bg-surface">
+  <div class="max-w-content mx-auto px-container-x md:px-container-x-lg py-section-y space-y-3xl">
+
+    <!-- Header -->
+    <header class="border-b-4 border-revolutionary-red pb-md">
+      <h1 class="uppercase tracking-tighter text-deep-charcoal" style="font-family: var(--font-headline); font-size: var(--text-display); line-height: 0.9">
+        Motion Lab
+      </h1>
+      <p class="italic text-on-surface-variant mt-sm" style="font-family: var(--font-label); font-size: var(--text-body-lg)">
+        Proposed vocabulary for the acts-of-defiance motion system. Hover, click, and Tab through every element.
+      </p>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- Section 1: Easings — curve diagrams + continuous loop previews -->
+    <!-- ============================================================ -->
+    <section>
+      <h2 class="uppercase tracking-tight mb-lg" style="font-family: var(--font-headline); font-size: var(--text-h3)">
+        Easings
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+        {easings.map((e) => (
+          <div class="bg-white p-lg shadow-sm">
+            <div class="flex items-baseline justify-between mb-sm">
+              <h3 class="uppercase tracking-widest text-revolutionary-red" style="font-family: var(--font-headline); font-size: var(--text-body-lg)">
+                --ease-{e.name}
+              </h3>
+              <code class="text-deep-charcoal/60" style="font-size: var(--text-caption)">{e.curve}</code>
+            </div>
+            <p class="italic text-on-surface-variant mb-md" style="font-family: var(--font-label); font-size: var(--text-caption)">
+              {e.desc}
+            </p>
+
+            <!-- Continuous loop rail — a dot translates left→right forever in this easing -->
+            <div class="relative h-8 bg-surface-container-high rounded-sm overflow-hidden">
+              <div
+                class={`loop-rail loop-${e.name} absolute top-1/2 -translate-y-1/2 w-6 h-6 bg-revolutionary-red rounded-full`}
+                style="left: 0"
+              ></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- Section 2: Durations — identical color swap, 4 speeds          -->
+    <!-- ============================================================ -->
+    <section>
+      <h2 class="uppercase tracking-tight mb-lg" style="font-family: var(--font-headline); font-size: var(--text-h3)">
+        Durations
+      </h2>
+      <p class="italic text-on-surface-variant mb-md" style="font-family: var(--font-label); font-size: var(--text-body)">
+        Hover each block. Same easing (manifesto), four different speeds.
+      </p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+        {durations.map((d) => (
+          <button
+            type="button"
+            class={`duration-demo dur-${d.name} aspect-square flex flex-col items-center justify-center text-white uppercase tracking-widest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-warm-gold`}
+            style="font-family: var(--font-headline); font-size: var(--text-body)"
+          >
+            <span class="font-black text-h3" style="font-family: var(--font-headline); font-size: var(--text-h3); line-height: 1">{d.ms}</span>
+            <span style="font-size: var(--text-caption)">{d.name}</span>
+          </button>
+        ))}
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- Section 3: Brand-coded link — sweeping underline               -->
+    <!-- ============================================================ -->
+    <section>
+      <h2 class="uppercase tracking-tight mb-lg" style="font-family: var(--font-headline); font-size: var(--text-h3)">
+        Links — sweeping underline
+      </h2>
+      <p class="italic text-on-surface-variant mb-lg" style="font-family: var(--font-label); font-size: var(--text-body)">
+        Hover the three links. Color swap + a 2px warm-gold underline that sweeps in from left.
+      </p>
+      <div class="bg-deep-charcoal p-xl flex flex-wrap gap-xl justify-center">
+        <a href="#" class="brand-link uppercase tracking-widest text-white" style="font-family: var(--font-headline); font-size: var(--text-body-lg)">Artists</a>
+        <a href="#" class="brand-link uppercase tracking-widest text-white" style="font-family: var(--font-headline); font-size: var(--text-body-lg)">Movements</a>
+        <a href="#" class="brand-link uppercase tracking-widest text-white" style="font-family: var(--font-headline); font-size: var(--text-body-lg)">Organizations</a>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- Section 4: Button — letterpress press-down                     -->
+    <!-- ============================================================ -->
+    <section>
+      <h2 class="uppercase tracking-tight mb-lg" style="font-family: var(--font-headline); font-size: var(--text-h3)">
+        Buttons — letterpress press
+      </h2>
+      <p class="italic text-on-surface-variant mb-lg" style="font-family: var(--font-label); font-size: var(--text-body)">
+        Click & hold. Background shift + 2px press-down + micro-scale 0.98. Active release uses --ease-stamp.
+      </p>
+      <div class="flex flex-wrap gap-lg">
+        <button type="button" class="brand-btn brand-btn-primary px-lg py-sm text-white uppercase tracking-widest" style="font-family: var(--font-headline); font-size: var(--text-caption)">
+          Read the Manifesto
+        </button>
+        <button type="button" class="brand-btn brand-btn-secondary px-lg py-sm uppercase tracking-widest" style="font-family: var(--font-headline); font-size: var(--text-caption)">
+          Explore Archive
+        </button>
+        <button type="button" class="brand-btn brand-btn-ghost px-lg py-sm uppercase tracking-widest" style="font-family: var(--font-headline); font-size: var(--text-caption)">
+          All Stories
+        </button>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- Section 5: Card hover — risograph misregistration              -->
+    <!-- ============================================================ -->
+    <section>
+      <h2 class="uppercase tracking-tight mb-lg" style="font-family: var(--font-headline); font-size: var(--text-h3)">
+        Cards — risograph misregistration
+      </h2>
+      <p class="italic text-on-surface-variant mb-lg" style="font-family: var(--font-label); font-size: var(--text-body)">
+        Hover each card. Lift 4px + shadow + image zoom to 1.04. Headline shifts 2px with a red offset shadow — like risograph print misregistration.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+        <a href="#" class="brand-card group block bg-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-revolutionary-red">
+          <div class="aspect-[4/3] bg-movement-teal overflow-hidden relative">
+            <div class="brand-card-image absolute inset-0 sunburst-bg opacity-60"></div>
+          </div>
+          <div class="p-lg">
+            <span class="inline-block bg-movement-teal text-white px-sm py-3xs rounded-full uppercase tracking-widest mb-sm" style="font-family: var(--font-headline); font-size: var(--text-caption)">
+              Organizations
+            </span>
+            <h3 class="brand-card-title uppercase tracking-tight text-deep-charcoal" style="font-family: var(--font-headline); font-size: var(--text-h3); line-height: 1">
+              The Black Panthers Free Breakfast Program
+            </h3>
+          </div>
+        </a>
+        <a href="#" class="brand-card group block bg-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-revolutionary-red">
+          <div class="aspect-[4/3] bg-revolutionary-red overflow-hidden relative">
+            <div class="brand-card-image absolute inset-0 sunburst-bg opacity-60"></div>
+          </div>
+          <div class="p-lg">
+            <span class="inline-block bg-revolutionary-red text-white px-sm py-3xs rounded-full uppercase tracking-widest mb-sm" style="font-family: var(--font-headline); font-size: var(--text-caption)">
+              Movements
+            </span>
+            <h3 class="brand-card-title uppercase tracking-tight text-deep-charcoal" style="font-family: var(--font-headline); font-size: var(--text-h3); line-height: 1">
+              Act Up and the Silence Equals Death Campaign
+            </h3>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- Section 6: Badges — press-in with defiant overshoot            -->
+    <!-- ============================================================ -->
+    <section>
+      <h2 class="uppercase tracking-tight mb-lg" style="font-family: var(--font-headline); font-size: var(--text-h3)">
+        Badges — press-in arrival
+      </h2>
+      <p class="italic text-on-surface-variant mb-lg" style="font-family: var(--font-label); font-size: var(--text-body)">
+        Click "Re-stamp" — badges scale in from 0.94 with the defiant easing (one firm overshoot, no bounce-back).
+      </p>
+      <div class="flex items-center gap-lg">
+        <button id="restamp-btn" type="button" class="brand-btn brand-btn-primary px-lg py-sm text-white uppercase tracking-widest" style="font-family: var(--font-headline); font-size: var(--text-caption)">
+          Re-stamp badges
+        </button>
+        <div id="badge-row" class="flex flex-wrap gap-sm">
+          <span class="stamp-badge inline-block text-white px-sm py-3xs rounded-full uppercase tracking-widest" style="font-family: var(--font-headline); font-size: var(--text-caption); background: #795900">Artists</span>
+          <span class="stamp-badge inline-block text-white px-sm py-3xs rounded-full uppercase tracking-widest" style="font-family: var(--font-headline); font-size: var(--text-caption); background: #c23b22">Movements</span>
+          <span class="stamp-badge inline-block text-white px-sm py-3xs rounded-full uppercase tracking-widest" style="font-family: var(--font-headline); font-size: var(--text-caption); background: #2a7b88">Organizations</span>
+          <span class="stamp-badge inline-block text-white px-sm py-3xs rounded-full uppercase tracking-widest" style="font-family: var(--font-headline); font-size: var(--text-caption); background: #795548">People</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- Section 7: Focus ring pulse                                     -->
+    <!-- ============================================================ -->
+    <section>
+      <h2 class="uppercase tracking-tight mb-lg" style="font-family: var(--font-headline); font-size: var(--text-h3)">
+        Focus ring — arrival pulse
+      </h2>
+      <p class="italic text-on-surface-variant mb-lg" style="font-family: var(--font-label); font-size: var(--text-body)">
+        Tab or click the buttons. Outline is instant, a 1-shot warm-gold pulse expands outward on focus, and hover swaps the background to revolutionary-red.
+      </p>
+      <div class="flex flex-wrap gap-lg">
+        <button type="button" class="pulse-focus px-lg py-sm bg-deep-charcoal text-white uppercase tracking-widest" style="font-family: var(--font-headline); font-size: var(--text-caption)">Focus 1</button>
+        <button type="button" class="pulse-focus px-lg py-sm bg-deep-charcoal text-white uppercase tracking-widest" style="font-family: var(--font-headline); font-size: var(--text-caption)">Focus 2</button>
+        <button type="button" class="pulse-focus px-lg py-sm bg-deep-charcoal text-white uppercase tracking-widest" style="font-family: var(--font-headline); font-size: var(--text-caption)">Focus 3</button>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ============================================================
+   * PROPOSED MOTION TOKENS — scoped here for A/B comparison.
+   * These will move into global.css @theme once approved.
+   * ============================================================ */
+  :root {
+    --duration-snap:    90ms;
+    --duration-quick:  180ms;
+    --duration-arrive: 320ms;
+    --duration-declare: 560ms;
+
+    --ease-stamp:     cubic-bezier(0.9, 0, 0.1, 1);
+    --ease-manifesto: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-ink:       cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-defiant:   cubic-bezier(0.32, 1.12, 0.28, 1);
+  }
+
+  /* ============================================================
+   * SECTION 1 — easing loop rails (continuous preview)
+   * A dot translates 0→(100% − width) forever, looped, in each curve.
+   * ============================================================ */
+  @keyframes loop-ltr {
+    0%   { left: 0; }
+    45%  { left: calc(100% - 1.5rem); }
+    50%  { left: calc(100% - 1.5rem); }
+    95%  { left: 0; }
+    100% { left: 0; }
+  }
+  .loop-rail {
+    animation: loop-ltr 2.4s infinite;
+  }
+  .loop-stamp     { animation-timing-function: var(--ease-stamp); }
+  .loop-manifesto { animation-timing-function: var(--ease-manifesto); }
+  .loop-ink       { animation-timing-function: var(--ease-ink); }
+  .loop-defiant   { animation-timing-function: var(--ease-defiant); }
+
+  /* ============================================================
+   * SECTION 2 — duration demo buttons
+   * Same color swap, four speeds, all using --ease-manifesto.
+   * ============================================================ */
+  .duration-demo {
+    background-color: var(--color-deep-charcoal);
+    transition-property: background-color, transform;
+    transition-timing-function: var(--ease-manifesto);
+  }
+  .duration-demo:hover {
+    background-color: var(--color-revolutionary-red);
+    transform: translateY(-4px);
+  }
+  .dur-snap    { transition-duration: var(--duration-snap); }
+  .dur-quick   { transition-duration: var(--duration-quick); }
+  .dur-arrive  { transition-duration: var(--duration-arrive); }
+  .dur-declare { transition-duration: var(--duration-declare); }
+
+  /* ============================================================
+   * SECTION 3 — brand link with sweeping underline
+   * ::after is a 2px warm-gold bar that scales from 0 → 1 on the
+   * x-axis, transform-origin left. Uses --ease-manifesto.
+   * ============================================================ */
+  .brand-link {
+    position: relative;
+    display: inline-block;
+    transition: color var(--duration-quick) var(--ease-manifesto);
+  }
+  .brand-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-warm-gold);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--duration-arrive) var(--ease-manifesto);
+  }
+  .brand-link:hover,
+  .brand-link:focus-visible {
+    color: var(--color-warm-gold);
+  }
+  .brand-link:hover::after,
+  .brand-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  /* ============================================================
+   * SECTION 4 — brand buttons with letterpress press
+   * ============================================================ */
+  .brand-btn {
+    transition-property: background-color, color, transform, box-shadow;
+    transition-duration: var(--duration-quick);
+    transition-timing-function: var(--ease-manifesto);
+  }
+  .brand-btn-primary {
+    background-color: var(--color-revolutionary-red);
+    box-shadow: 0 2px 0 0 var(--color-deep-charcoal);
+  }
+  .brand-btn-primary:hover {
+    background-color: color-mix(in srgb, var(--color-revolutionary-red) 85%, black);
+  }
+  .brand-btn-secondary {
+    background-color: var(--color-warm-gold);
+    color: var(--color-deep-charcoal);
+    box-shadow: 0 2px 0 0 var(--color-deep-charcoal);
+  }
+  .brand-btn-secondary:hover {
+    background-color: color-mix(in srgb, var(--color-warm-gold) 85%, black);
+  }
+  .brand-btn-ghost {
+    background-color: transparent;
+    color: var(--color-deep-charcoal);
+    border: 2px solid var(--color-deep-charcoal);
+    box-shadow: 0 2px 0 0 var(--color-deep-charcoal);
+  }
+  .brand-btn-ghost:hover {
+    background-color: var(--color-deep-charcoal);
+    color: var(--color-surface);
+  }
+  .brand-btn:active {
+    transform: translateY(2px) scale(0.98);
+    box-shadow: 0 0 0 0 var(--color-deep-charcoal);
+    transition-duration: var(--duration-snap);
+    transition-timing-function: var(--ease-stamp);
+  }
+  .brand-btn:focus-visible {
+    outline: 2px solid var(--color-warm-gold);
+    outline-offset: 4px;
+  }
+
+  /* ============================================================
+   * SECTION 5 — brand cards with risograph misregistration
+   * Headline gets a 2px translation + a 2px red offset shadow on hover.
+   * ============================================================ */
+  .brand-card {
+    transition-property: transform, box-shadow;
+    transition-duration: var(--duration-arrive);
+    transition-timing-function: var(--ease-manifesto);
+  }
+  .brand-card:hover,
+  .brand-card:focus-visible {
+    transform: translateY(-4px);
+    box-shadow:
+      0 12px 24px -8px color-mix(in srgb, var(--color-deep-charcoal) 40%, transparent),
+      0 4px 8px -4px color-mix(in srgb, var(--color-deep-charcoal) 20%, transparent);
+  }
+  .brand-card-image {
+    transition: transform var(--duration-declare) var(--ease-manifesto);
+  }
+  .brand-card:hover .brand-card-image,
+  .brand-card:focus-visible .brand-card-image {
+    transform: scale(1.04);
+  }
+  .brand-card-title {
+    transition-property: transform, text-shadow, color;
+    transition-duration: var(--duration-quick);
+    transition-timing-function: var(--ease-manifesto);
+  }
+  .brand-card:hover .brand-card-title,
+  .brand-card:focus-visible .brand-card-title {
+    transform: translate(2px, 0);
+    text-shadow: -2px 2px 0 var(--color-revolutionary-red);
+  }
+
+  /* ============================================================
+   * SECTION 6 — badge stamp-in arrival
+   * ============================================================ */
+  @keyframes stamp-in {
+    0%   { transform: scale(0.94); opacity: 0; }
+    100% { transform: scale(1);    opacity: 1; }
+  }
+  .stamp-badge {
+    animation: stamp-in var(--duration-arrive) var(--ease-defiant) both;
+  }
+
+  /* ============================================================
+   * SECTION 7 — focus ring arrival pulse
+   * Outline is instant; a separate :focus-visible animation runs
+   * a 1-shot outward pulse so keyboard arrival feels tangible.
+   * The pulse expands from the button edge (box-shadow) — larger and
+   * slower than the hover transitions so it's unmistakable.
+   * ============================================================ */
+  @keyframes focus-pulse {
+    /* Outline is 2px solid at offset 4px → outer edge at 6px from button.
+     * Pulse starts AT that outer edge and expands another 18px outward so
+     * it's visible beyond the outline, not hidden underneath it. */
+    0%   { box-shadow: 0 0 0 6px  rgba(212, 168, 67, 0.9); }
+    100% { box-shadow: 0 0 0 24px rgba(212, 168, 67, 0); }
+  }
+  .pulse-focus {
+    transition: background-color var(--duration-quick) var(--ease-manifesto);
+  }
+  .pulse-focus:hover {
+    background-color: var(--color-revolutionary-red);
+  }
+  /* Pulse fires on any focus so mouse clicks trigger it too (not just Tab).
+   * In production this should be :focus-visible only — but the lab demo
+   * needs all pointer types to see the effect. */
+  .pulse-focus:focus {
+    outline: 2px solid var(--color-warm-gold);
+    outline-offset: 4px;
+    animation: focus-pulse var(--duration-declare) var(--ease-stamp) 1;
+  }
+
+  /* ============================================================
+   * REDUCED MOTION — every animation/transition above collapses.
+   * Opacity transitions are preserved; transforms + scales are not.
+   * ============================================================ */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .loop-rail {
+      animation: none !important;
+      left: calc(50% - 0.75rem) !important;
+    }
+  }
+</style>
+
+<script>
+  // "Re-stamp badges" button — clones the badge row so the stamp-in
+  // animation replays. Simpler than toggling classes + forcing reflow.
+  const btn = document.getElementById("restamp-btn");
+  const row = document.getElementById("badge-row");
+  if (btn && row) {
+    btn.addEventListener("click", () => {
+      const fresh = row.cloneNode(true) as HTMLElement;
+      row.replaceWith(fresh);
+    });
+  }
+</script>
