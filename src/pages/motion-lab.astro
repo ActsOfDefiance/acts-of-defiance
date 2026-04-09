@@ -420,11 +420,13 @@ const durations = [
 
 <script>
   // "Re-stamp badges" button — clones the badge row so the stamp-in
-  // animation replays. Simpler than toggling classes + forcing reflow.
+  // animation replays. Re-queries the DOM each click because
+  // replaceWith() detaches the old node.
   const btn = document.getElementById("restamp-btn");
-  const row = document.getElementById("badge-row");
-  if (btn && row) {
+  if (btn) {
     btn.addEventListener("click", () => {
+      const row = document.getElementById("badge-row");
+      if (!row) return;
       const fresh = row.cloneNode(true) as HTMLElement;
       row.replaceWith(fresh);
     });

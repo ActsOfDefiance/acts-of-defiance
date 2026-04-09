@@ -268,11 +268,9 @@ h1, h2, h3, h4, h5, h6 {
   outline-offset: 4px;
   animation: aod-focus-pulse var(--duration-declare) var(--ease-stamp) 1;
 }
-.aod-focus-ring:focus:not(:focus-visible) {
-  /* Keep the outline + pulse for mouse focus — brand decision (see
-   * docs/specs/motion.md §focus). If you want keyboard-only focus, use
-   * the plain :focus-visible Tailwind utilities instead. */
-}
+/* The outline + pulse fires on :focus (not just :focus-visible) so mouse
+ * clicks also see it — this is a brand decision. See motion.md §focus.
+ * If you want keyboard-only focus, use :focus-visible utilities instead. */
 
 /* Helper: .aod-brand-link — color swap + sweeping warm-gold underline
  * that scales from 0 → 1 on the x-axis. Transform-origin left for the
