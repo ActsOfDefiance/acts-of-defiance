@@ -1,0 +1,61 @@
+---
+// Cluster — wrapping inline group with token-based gap.
+//
+// For chip rows, tag lists, nav link groups, button sets — anything that
+// wraps naturally and needs consistent inline spacing.
+//
+// Usage:
+//   <Cluster>                                  <!-- default gap: inline (12px) -->
+//   <Cluster gap="2xs">                        <!-- tighter: 8px -->
+//   <Cluster gap="lg" justify="center">        <!-- centered footer nav -->
+
+interface Props {
+  /** Spacing token name for the gap (maps to gap-{token}). */
+  gap?: string;
+  /** Justify-content value. */
+  justify?: "start" | "center" | "end" | "between";
+  /** Align-items value. */
+  align?: "start" | "center" | "end" | "baseline";
+  /** HTML element to render. Default: div. */
+  as?: string;
+  /** Extra classes appended after the layout classes. */
+  class?: string;
+  [key: string]: any;
+}
+
+const justifyMap: Record<string, string> = {
+  start: "justify-start",
+  center: "justify-center",
+  end: "justify-end",
+  between: "justify-between",
+};
+
+const alignMap: Record<string, string> = {
+  start: "items-start",
+  center: "items-center",
+  end: "items-end",
+  baseline: "items-baseline",
+};
+
+const {
+  gap = "inline",
+  justify,
+  align,
+  as: Tag = "div",
+  class: className = "",
+  ...rest
+} = Astro.props;
+---
+
+<Tag
+  class:list={[
+    "flex flex-wrap",
+    `gap-${gap}`,
+    justify && justifyMap[justify],
+    align && alignMap[align],
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</Tag>

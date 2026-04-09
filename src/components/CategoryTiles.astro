@@ -4,9 +4,10 @@
 // upper-left, category name at the bottom. Used on the about page
 // (and intended for the home page newsletter section eventually).
 import { CATEGORY_LIST } from "../lib/categories";
+import Grid from "./layout/Grid.astro";
 ---
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
+<Grid cols="1 sm:2 lg:4" gap="md">
   {CATEGORY_LIST.map((cat) => (
     <a
       href={`/categories/${cat.slug}`}
@@ -46,4 +47,4 @@ import { CATEGORY_LIST } from "../lib/categories";
       </h3>
     </a>
   ))}
-</div>
+</Grid>

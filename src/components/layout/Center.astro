@@ -1,0 +1,32 @@
+---
+// Center — horizontally centers content via text-center.
+//
+// A thin wrapper for the common "center a heading or empty-state message"
+// pattern. For centering a block with max-width, use Container instead.
+//
+// Usage:
+//   <Center>
+//     <SectionHead variant="editorial">What we cover</SectionHead>
+//   </Center>
+//   <Center class="py-section-y">
+//     <p>No stories yet.</p>
+//   </Center>
+
+interface Props {
+  /** HTML element to render. Default: div. */
+  as?: string;
+  /** Extra classes appended after the layout classes. */
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  as: Tag = "div",
+  class: className = "",
+  ...rest
+} = Astro.props;
+---
+
+<Tag class:list={["text-center", className]} {...rest}>
+  <slot />
+</Tag>

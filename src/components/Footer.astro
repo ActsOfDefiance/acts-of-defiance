@@ -1,5 +1,8 @@
 ---
 import { CATEGORY_LIST } from "../lib/categories";
+import Container from "./layout/Container.astro";
+import Stack from "./layout/Stack.astro";
+import Cluster from "./layout/Cluster.astro";
 
 const currentPath = Astro.url.pathname;
 
@@ -19,33 +22,35 @@ const footerLinks = [
 ---
 
 <footer class="bg-deep-charcoal text-white py-2xl px-container-x md:px-container-x-lg">
-  <div class="max-w-hero mx-auto text-center space-y-lg">
-    <p
-      class="italic text-warm-gold"
-      style="font-family: var(--font-label); font-size: var(--text-body-lg)"
-    >
-      Remembering those whose very existence defied injustice.
-    </p>
-    <nav class="flex flex-wrap justify-center gap-lg" aria-label="Footer navigation">
-      {footerLinks.map((link) => {
-        const active = isActive(link.href);
-        return (
-          <a
-            href={link.href}
-            aria-current={active ? "page" : undefined}
-            class:list={[
-              "aod-brand-link aod-focus-ring uppercase tracking-wide rounded-sm",
-              {
-                "font-bold": active,
-                "text-white/70": !active,
-              },
-            ]}
-            style="font-family: var(--font-headline); font-size: var(--text-caption)"
-          >
-            {link.label}
-          </a>
-        );
-      })}
-    </nav>
-  </div>
+  <Container width="hero" class="!px-0 text-center">
+    <Stack gap="lg">
+      <p
+        class="italic text-warm-gold"
+        style="font-family: var(--font-label); font-size: var(--text-body-lg)"
+      >
+        Remembering those whose very existence defied injustice.
+      </p>
+      <Cluster as="nav" gap="lg" justify="center" aria-label="Footer navigation">
+        {footerLinks.map((link) => {
+          const active = isActive(link.href);
+          return (
+            <a
+              href={link.href}
+              aria-current={active ? "page" : undefined}
+              class:list={[
+                "aod-brand-link aod-focus-ring uppercase tracking-wide rounded-sm",
+                {
+                  "font-bold": active,
+                  "text-white/70": !active,
+                },
+              ]}
+              style="font-family: var(--font-headline); font-size: var(--text-caption)"
+            >
+              {link.label}
+            </a>
+          );
+        })}
+      </Cluster>
+    </Stack>
+  </Container>
 </footer>

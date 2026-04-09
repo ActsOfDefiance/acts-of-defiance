@@ -4,6 +4,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import CategoryTiles from "../components/CategoryTiles.astro";
 import Prose from "../components/Prose.astro";
 import SectionHead from "../components/SectionHead.astro";
+import Container from "../components/layout/Container.astro";
+import Stack from "../components/layout/Stack.astro";
+import Center from "../components/layout/Center.astro";
 
 const entry = await getEntry("about", "index");
 if (!entry) {
@@ -32,12 +35,12 @@ const { Content } = await render(entry);
     <div class="absolute inset-0 bg-gradient-to-t from-deep-charcoal via-transparent to-transparent"></div>
   </header>
 
-  <!-- Main content overlaps hero by --spacing-3xl (-mt: negative 3xl via calc) -->
-  <div class="max-w-content mx-auto px-container-x md:px-container-x-lg relative z-10 -mt-3xl">
+  <!-- Main content overlaps hero -->
+  <Container class="relative z-10 -mt-3xl">
 
     <!-- Page header: white card -->
     <div class="bg-white p-lg md:p-xl shadow-sm">
-      <div class="flex flex-col items-start gap-sm">
+      <Stack gap="sm" class="items-start">
         <!-- Headline -->
         <h1
           class="uppercase tracking-tighter max-w-hero text-deep-charcoal"
@@ -52,7 +55,7 @@ const { Content } = await render(entry);
         >
           {entry.data.tagline}
         </p>
-      </div>
+      </Stack>
     </div>
 
     <!-- Manifesto body — shared Prose component (no page-level scoped CSS) -->
@@ -64,11 +67,13 @@ const { Content } = await render(entry);
 
     <!-- What we cover — category tile grid -->
     <section class="py-section-y border-t border-outline-variant">
-      <SectionHead variant="editorial" class="mb-xl text-center">
-        What we cover
-      </SectionHead>
+      <Center class="mb-xl">
+        <SectionHead variant="editorial">
+          What we cover
+        </SectionHead>
+      </Center>
       <CategoryTiles />
     </section>
 
-  </div><!-- /max-w-content -->
+  </Container>
 </BaseLayout>

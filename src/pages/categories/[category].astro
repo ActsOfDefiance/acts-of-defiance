@@ -3,6 +3,10 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ArticleCard from "../../components/ArticleCard.astro";
 import { CATEGORY_LIST } from "../../lib/categories";
+import Container from "../../components/layout/Container.astro";
+import Cluster from "../../components/layout/Cluster.astro";
+import Grid from "../../components/layout/Grid.astro";
+import Center from "../../components/layout/Center.astro";
 
 export async function getStaticPaths() {
   return CATEGORY_LIST.map((cat) => ({
@@ -35,7 +39,7 @@ const tags = [...tagSet].sort();
 >
   <!-- Page header: parchment-textured block with massive category title + tag filter row -->
   <header class="parchment-texture-category border-b border-outline-variant/30 pt-section-y pb-2xl px-container-x md:px-container-x-lg">
-    <div class="max-w-content mx-auto">
+    <Container width="content" class="!px-0">
       <h1
         class="uppercase tracking-tighter mb-md"
         style={`font-family: var(--font-headline); font-size: var(--text-display); line-height: 0.9; color:${category.accent}`}
@@ -55,7 +59,7 @@ const tags = [...tagSet].sort();
         properly conveyed as such to assistive technologies (the
         `disabled` attribute handles aria semantics by default).
       -->
-      <div class="flex flex-wrap gap-xs" role="group" aria-label="Filter by tag (coming soon)">
+      <Cluster gap="xs" role="group" aria-label="Filter by tag (coming soon)">
         <button
           type="button"
           disabled
@@ -76,14 +80,14 @@ const tags = [...tagSet].sort();
             {tag}
           </button>
         ))}
-      </div>
-    </div>
+      </Cluster>
+    </Container>
   </header>
 
   <!-- Article feed -->
-  <section class="max-w-content mx-auto px-container-x md:px-container-x-lg py-section-y">
+  <Container as="section" class="py-section-y">
     {articles.length === 0 ? (
-      <div class="py-section-y text-center">
+      <Center class="py-section-y">
         <p
           class="italic text-deep-charcoal/60"
           style="font-family: var(--font-label); font-size: var(--text-body-lg)"
@@ -93,23 +97,23 @@ const tags = [...tagSet].sort();
         <p class="mt-sm text-deep-charcoal/50" style="font-size: var(--text-body)">
           Content will flow here from dime.
         </p>
-      </div>
+      </Center>
     ) : (
       <>
-        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-card-gap list-none p-0">
+        <Grid as="ul" class="list-none p-0">
           {articles.map((article, i) => (
             <li>
               <ArticleCard article={article} bordered variant={i} />
             </li>
           ))}
-        </ul>
+        </Grid>
 
         <!--
           Load more — UI scaffolding only. Pagination ships in a future
           ticket. Button is `disabled` until pagination is wired so it
           can't trap keyboard users in a dead-end interaction.
         -->
-        <div class="mt-section-y flex justify-center">
+        <Center class="mt-section-y">
           <button
             type="button"
             disabled
@@ -118,8 +122,8 @@ const tags = [...tagSet].sort();
           >
             Load More Archives
           </button>
-        </div>
+        </Center>
       </>
     )}
-  </section>
+  </Container>
 </BaseLayout>

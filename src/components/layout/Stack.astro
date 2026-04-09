@@ -1,0 +1,35 @@
+---
+// Stack — vertical rhythm with token-based gap.
+//
+// Renders a flex column with a gap drawn from the spacing scale. Replaces
+// scattered `space-y-*` and `flex flex-col gap-*` patterns in page templates.
+//
+// Usage:
+//   <Stack>                           <!-- default gap: stack (32px) -->
+//   <Stack gap="sm">                  <!-- tighter: 16px -->
+//   <Stack gap="section-y" as="ul">   <!-- section break, renders <ul> -->
+
+interface Props {
+  /** Spacing token name for the vertical gap (maps to gap-{token}). */
+  gap?: string;
+  /** HTML element to render. Default: div. */
+  as?: string;
+  /** Extra classes appended after the layout classes. */
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  gap = "stack",
+  as: Tag = "div",
+  class: className = "",
+  ...rest
+} = Astro.props;
+---
+
+<Tag
+  class:list={["flex flex-col", `gap-${gap}`, className]}
+  {...rest}
+>
+  <slot />
+</Tag>

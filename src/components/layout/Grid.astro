@@ -1,0 +1,49 @@
+---
+// Grid — responsive column grid with token-based gap.
+//
+// Uses explicit breakpoint columns (not CSS auto-fit) because the editorial
+// layout is intentionally designed per breakpoint, not "fill available space."
+//
+// Usage:
+//   <Grid>                                     <!-- 1 / md:2 / lg:3, gap card-gap -->
+//   <Grid cols="1 sm:2 lg:4" gap="md">        <!-- category tiles -->
+//   <Grid cols="1 md:3" gap="lg" as="ul">     <!-- related articles -->
+
+interface Props {
+  /**
+   * Space-separated column spec. Each token is either a plain number (base)
+   * or a "breakpoint:number" pair. Examples:
+   *   "1 md:2 lg:3"  → grid-cols-1 md:grid-cols-2 lg:grid-cols-3
+   *   "1 md:3"       → grid-cols-1 md:grid-cols-3
+   */
+  cols?: string;
+  /** Spacing token name for the gap (maps to gap-{token}). */
+  gap?: string;
+  /** HTML element to render. Default: div. */
+  as?: string;
+  /** Extra classes appended after the layout classes. */
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  cols = "1 md:2 lg:3",
+  gap = "card-gap",
+  as: Tag = "div",
+  class: className = "",
+  ...rest
+} = Astro.props;
+
+// Parse "1 md:2 lg:3" → ["grid-cols-1", "md:grid-cols-2", "lg:grid-cols-3"]
+const colClasses = cols.split(/\s+/).map((token) => {
+  const [prefix, count] = token.includes(":") ? token.split(":") : ["", token];
+  return prefix ? `${prefix}:grid-cols-${count}` : `grid-cols-${count}`;
+});
+---
+
+<Tag
+  class:list={["grid", ...colClasses, `gap-${gap}`, className]}
+  {...rest}
+>
+  <slot />
+</Tag>
