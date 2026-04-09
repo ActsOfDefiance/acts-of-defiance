@@ -33,7 +33,7 @@ const placeholderBg =
 
 <a
   href={`/articles/${article.id}`}
-  class="flex flex-col gap-6 group cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-revolutionary-red rounded-sm"
+  class="flex flex-col gap-md group cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-revolutionary-red rounded-sm"
 >
   <div
     class:list={[
@@ -61,16 +61,16 @@ const placeholderBg =
         </span>
       </div>
     )}
-    <div class="absolute top-4 left-4">
+    <div class="absolute top-sm left-sm">
       <span
-        class="px-3 py-1 rounded-sm font-bold uppercase tracking-widest"
+        class="px-xs py-3xs rounded-sm font-bold uppercase tracking-widest"
         style={`font-family: var(--font-headline); font-size: var(--text-caption); ${badgeStyle(article.data.category)}`}
       >
         {cat?.name ?? article.data.category}
       </span>
     </div>
   </div>
-  <div class="space-y-3">
+  <div class="space-y-xs">
     <h3
       class="uppercase tracking-tight text-deep-charcoal group-hover:text-revolutionary-red transition-colors"
       style="font-family: var(--font-headline); font-size: var(--text-h4); line-height: 1.05"
@@ -84,7 +84,7 @@ const placeholderBg =
       {article.data.description}
     </p>
     {article.data.tags.length > 0 && (
-      <div class="flex flex-wrap gap-2 pt-1">
+      <div class="flex flex-wrap gap-2xs pt-3xs">
         {article.data.tags.map((tag) => (
           <span
             class="font-bold uppercase tracking-tighter text-deep-charcoal/60"

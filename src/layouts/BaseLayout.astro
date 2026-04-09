@@ -10,7 +10,10 @@ interface Props {
   bodyClass?: string;
 }
 
-const { title, description, mainClass = "pt-16", bodyClass = "" } = Astro.props;
+// Default `mainClass` reserves exactly the header's height as top padding,
+// so content slots cleanly below the fixed nav. Pages that render a hero
+// extending behind the header (home, article, about) pass mainClass="".
+const { title, description, mainClass = "pt-[var(--header-height)]", bodyClass = "" } = Astro.props;
 const siteName = "Acts of Defiance";
 const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
 ---

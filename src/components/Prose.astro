@@ -7,18 +7,18 @@
 //     <Content />
 //   </Prose>
 //
-// All sizes pull from the type scale tokens. See docs/specs/typography.md.
+// Reading measure comes from the --container-reading token (700px).
+// All sizes pull from the type scale tokens. See docs/specs/typography.md
+// and docs/specs/spacing.md.
 
 interface Props {
-  /** Optional max-width for the readable column. Defaults to 700px. */
-  maxWidth?: string;
   /** Optional className override / extension. */
   class?: string;
 }
 
-const { maxWidth = "700px", class: classOverride = "" } = Astro.props;
+const { class: classOverride = "" } = Astro.props;
 ---
 
-<div class={`prose mx-auto ${classOverride}`} style={`max-width:${maxWidth}`}>
+<div class={`prose mx-auto max-w-reading ${classOverride}`}>
   <slot />
 </div>
