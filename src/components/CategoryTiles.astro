@@ -10,14 +10,18 @@ import { CATEGORY_LIST } from "../lib/categories";
   {CATEGORY_LIST.map((cat) => (
     <a
       href={`/categories/${cat.slug}`}
-      class="p-lg px-md rounded-lg h-64 flex flex-col justify-between group cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all shadow-md relative overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-warm-gold"
+      class="aod-brand-card aod-focus-ring p-lg px-md rounded-lg h-64 flex flex-col justify-between group cursor-pointer shadow-md relative overflow-hidden"
       style={`background:${cat.accent}`}
       aria-label={`Browse ${cat.name}`}
     >
       <!-- Ghost icon — large, decorative, in the corner.
            The -right-lg/-top-lg offset pulls the icon partly off-canvas
            so the clipped silhouette reads as decoration. -->
-      <div class="absolute -right-lg -top-lg opacity-20 group-hover:opacity-30 transition-opacity" aria-hidden="true">
+      <div
+        class="absolute -right-lg -top-lg opacity-20 group-hover:opacity-30"
+        style="transition: opacity var(--duration-quick) var(--ease-manifesto)"
+        aria-hidden="true"
+      >
         <span
           class="material-symbols-outlined text-[120px]"
           style="font-variation-settings: 'FILL' 1;"

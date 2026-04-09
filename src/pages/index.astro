@@ -19,7 +19,7 @@ const articles = (await getCollection("articles", ({ data }) => !data.draft))
     <div class="absolute inset-0 hero-gradient flex flex-col justify-end px-container-x md:px-container-x-lg pb-hero-pb">
       <div class="max-w-hero space-y-stack">
         <span
-          class="inline-block bg-tertiary text-white px-sm py-3xs rounded-full font-bold uppercase tracking-widest"
+          class="motion-stamp-in inline-block bg-tertiary text-white px-sm py-3xs rounded-full font-bold uppercase tracking-widest"
           style="font-family: var(--font-headline); font-size: var(--text-caption)"
         >
           Manifesto
@@ -38,11 +38,15 @@ const articles = (await getCollection("articles", ({ data }) => !data.draft))
         <div class="pt-sm">
           <a
             href="/about"
-            class="inline-flex items-center gap-2xs bg-primary text-white px-lg py-sm rounded-lg font-black uppercase tracking-widest hover:bg-opacity-90 transition-all active:scale-95 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-warm-gold"
+            class="aod-brand-btn aod-focus-ring inline-flex items-center gap-2xs bg-primary text-white px-lg py-sm rounded-lg font-black uppercase tracking-widest hover:bg-opacity-90 group"
             style="font-family: var(--font-headline); font-size: var(--text-caption)"
           >
             Read the Manifesto
-            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" aria-hidden="true">arrow_forward</span>
+            <span
+              class="material-symbols-outlined group-hover:translate-x-1"
+              style="transition: transform var(--duration-arrive) var(--ease-manifesto)"
+              aria-hidden="true"
+            >arrow_forward</span>
           </a>
         </div>
       </div>

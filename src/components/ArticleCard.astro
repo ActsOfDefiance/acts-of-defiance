@@ -33,7 +33,7 @@ const placeholderBg =
 
 <a
   href={`/articles/${article.id}`}
-  class="flex flex-col gap-md group cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-revolutionary-red rounded-sm"
+  class="aod-brand-card aod-focus-ring flex flex-col gap-md group cursor-pointer rounded-lg bg-white"
 >
   <div
     class:list={[
@@ -49,7 +49,7 @@ const placeholderBg =
       <img
         src={`/images/articles/${article.data.images.hero}`}
         alt={article.data.title}
-        class="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-500"
+        class="aod-brand-card__image w-full h-full object-cover mix-blend-multiply opacity-90"
       />
     ) : (
       <div class="w-full h-full flex items-center justify-center">
@@ -70,9 +70,9 @@ const placeholderBg =
       </span>
     </div>
   </div>
-  <div class="space-y-xs">
+  <div class="space-y-xs px-md pb-md">
     <h3
-      class="uppercase tracking-tight text-deep-charcoal group-hover:text-revolutionary-red transition-colors"
+      class="aod-brand-card__title uppercase tracking-tight text-deep-charcoal"
       style="font-family: var(--font-headline); font-size: var(--text-h4); line-height: 1.05"
     >
       {article.data.title}

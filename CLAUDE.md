@@ -74,7 +74,7 @@ All tokens defined as Tailwind `@theme` vars in `src/styles/global.css`:
 | `parchment` / `surface` | `#f5edd6` | Page background |
 | `earth-brown` | `#6b4226` | People badge, muted text |
 
-Category chip classes: `bg-category-artists`, `bg-category-movements`, `bg-category-organizations`, `bg-category-people`
+Category accent colors are the single source of truth in `src/lib/categories.ts`. There are no `bg-category-*` Tailwind classes — apply category color via the `badgeStyle(slug)` helper or read `CATEGORIES[slug].accent` directly.
 
 ## Typography
 
@@ -93,6 +93,23 @@ Fonts:
 - `font-label`: Newsreader (serif, italic) — section labels, pullquotes, captions
 
 Apply families via `style="font-family: var(--font-headline)"` (Tailwind 4 doesn't support `font-headline` as a utility directly).
+
+## Motion
+
+**Full spec:** [`docs/specs/motion.md`](docs/specs/motion.md). Read it before adding or changing any transition, animation, hover, focus, or active state.
+
+Quick reference:
+
+- **Durations** (off-grid, hand-tuned): `--duration-snap` (90ms), `--duration-quick` (180ms), `--duration-arrive` (320ms), `--duration-declare` (560ms).
+- **Easings** (brand-named cubic-beziers): `--ease-stamp` (press feedback), `--ease-manifesto` (DEFAULT — hovers, lifts, color swaps), `--ease-ink` (reversible states), `--ease-defiant` (single overshoot, sparingly).
+- **Helper classes** in `src/styles/global.css`:
+  - `.aod-brand-link` — link color swap + sweeping warm-gold underline. Active state via `aria-current="page"`.
+  - `.aod-brand-btn` — button letterpress press (2px bottom shadow plate, presses down on `:active`).
+  - `.aod-brand-card` + `.aod-brand-card__image` + `.aod-brand-card__title` — card lift + image zoom + risograph headline misregistration on hover.
+  - `.aod-focus-ring` — instant warm-gold outline + outward pulse on any `:focus` (click or Tab).
+  - `.motion-stamp-in` — defiant overshoot scale-in for badge arrivals.
+- **Forbidden patterns:** `transition-colors`/`transition-all`/`duration-300`/`ease-in-out` (or any Tailwind default transition utility). Hardcoded ms values. `cubic-bezier(...)` literals outside `global.css`. Bare `:hover` color swaps without going through `.aod-brand-link` for nav links.
+- **Reduced motion:** global `@media (prefers-reduced-motion: reduce)` rule in `global.css` collapses all transitions and animations to `0.01ms`.
 
 ## Spacing & rhythm
 

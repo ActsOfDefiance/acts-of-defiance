@@ -153,6 +153,31 @@
   --radius-md: 0.25rem;
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
+
+  /* Motion — see docs/specs/motion.md
+   *
+   * Durations are deliberately off-grid (90 / 180 / 320 / 560ms) so motion
+   * feels hand-tuned rather than machine-defaulted.
+   *
+   * Easings are brand-named cubic-bezier curves, not Tailwind defaults:
+   *   - stamp     — abrupt edges, fast middle (letterpress press)
+   *   - manifesto — expo-out; snaps in, decelerates long (DEFAULT)
+   *   - ink       — symmetric steep (reversible states, overlays)
+   *   - defiant   — subtle overshoot (1.12, no bounce-back)
+   *
+   * Reduced motion is handled at the bottom of this file with a single
+   * @media (prefers-reduced-motion: reduce) block that collapses all
+   * transitions and animations to ~0ms.
+   */
+  --duration-snap:    90ms;
+  --duration-quick:  180ms;
+  --duration-arrive: 320ms;
+  --duration-declare: 560ms;
+
+  --ease-stamp:     cubic-bezier(0.9, 0, 0.1, 1);
+  --ease-manifesto: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-ink:       cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-defiant:   cubic-bezier(0.32, 1.12, 0.28, 1);
 }
 
 /* Custom gradients and effects */
@@ -209,4 +234,147 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 900;
   letter-spacing: -0.025em;
   line-height: 1.05;
+}
+
+/* ============================================================
+ * Motion — brand-coded interaction primitives.
+ * See docs/specs/motion.md for the full vocabulary.
+ * ============================================================ */
+
+/* Keyframe: stamp-in — badge arrival with defiant overshoot.
+ * Used by category badges and the article page category pill. */
+@keyframes aod-stamp-in {
+  0%   { transform: scale(0.94); opacity: 0; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+.motion-stamp-in {
+  animation: aod-stamp-in var(--duration-arrive) var(--ease-defiant) both;
+}
+
+/* Keyframe: focus-pulse — outward warm-gold pulse starting at the outer
+ * edge of the standard 2px / offset-4px outline so it's visible beyond
+ * the ring, not hidden underneath it. */
+@keyframes aod-focus-pulse {
+  0%   { box-shadow: 0 0 0 6px  color-mix(in srgb, var(--color-warm-gold) 90%, transparent); }
+  100% { box-shadow: 0 0 0 24px color-mix(in srgb, var(--color-warm-gold) 0%,  transparent); }
+}
+
+/* Helper: .aod-focus-ring — the canonical focus indicator. Applies the
+ * instant outline AND fires the 1-shot pulse on any focus (keyboard or
+ * pointer). Components opt in by adding this class to any interactive
+ * element they want to use the brand focus ring. */
+.aod-focus-ring:focus {
+  outline: 2px solid var(--color-warm-gold);
+  outline-offset: 4px;
+  animation: aod-focus-pulse var(--duration-declare) var(--ease-stamp) 1;
+}
+/* The outline + pulse fires on :focus (not just :focus-visible) so mouse
+ * clicks also see it — this is a brand decision. See motion.md §focus.
+ * If you want keyboard-only focus, use :focus-visible utilities instead. */
+
+/* Helper: .aod-brand-link — color swap + sweeping warm-gold underline
+ * that scales from 0 → 1 on the x-axis. Transform-origin left for the
+ * "drawn from left" feel. */
+.aod-brand-link {
+  position: relative;
+  display: inline-block;
+  transition: color var(--duration-quick) var(--ease-manifesto);
+}
+.aod-brand-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-warm-gold);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--duration-arrive) var(--ease-manifesto);
+}
+.aod-brand-link:hover,
+.aod-brand-link:focus-visible {
+  color: var(--color-warm-gold);
+}
+.aod-brand-link:hover::after,
+.aod-brand-link:focus-visible::after {
+  transform: scaleX(1);
+}
+/* Active / current-page state — underline stays permanently drawn and the
+ * text color is permanently warm-gold. No transition; active is a "has
+ * arrived" state, not an "is arriving" state. */
+.aod-brand-link[aria-current="page"] {
+  color: var(--color-warm-gold);
+}
+.aod-brand-link[aria-current="page"]::after {
+  transform: scaleX(1);
+  transition: none;
+}
+
+/* Helper: .aod-brand-btn — letterpress press.
+ * Bottom 2px deep-charcoal bar is the "press plate". On :active the
+ * button shifts down 2px + micro-scale 0.98 + the bar collapses, so it
+ * feels like a key being pressed. Uses --ease-stamp on release. */
+.aod-brand-btn {
+  box-shadow: 0 2px 0 0 var(--color-deep-charcoal);
+  transition-property: background-color, color, transform, box-shadow;
+  transition-duration: var(--duration-quick);
+  transition-timing-function: var(--ease-manifesto);
+}
+.aod-brand-btn:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: 0 0 0 0 var(--color-deep-charcoal);
+  transition-duration: var(--duration-snap);
+  transition-timing-function: var(--ease-stamp);
+}
+
+/* Helper: .aod-brand-card — card hover lift + shadow at --duration-arrive.
+ * Pair with .aod-brand-card__image (child) for image zoom at
+ * --duration-declare, and .aod-brand-card__title (child) for the
+ * risograph headline offset at --duration-quick. The offset is a
+ * 2px translate + 2px red text-shadow — hover-only (not static). */
+.aod-brand-card {
+  transition-property: transform, box-shadow;
+  transition-duration: var(--duration-arrive);
+  transition-timing-function: var(--ease-manifesto);
+}
+.aod-brand-card:hover,
+.aod-brand-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 24px -8px color-mix(in srgb, var(--color-deep-charcoal) 40%, transparent),
+    0 4px 8px -4px color-mix(in srgb, var(--color-deep-charcoal) 20%, transparent);
+}
+.aod-brand-card__image {
+  transition: transform var(--duration-declare) var(--ease-manifesto);
+}
+.aod-brand-card:hover .aod-brand-card__image,
+.aod-brand-card:focus-visible .aod-brand-card__image {
+  transform: scale(1.04);
+}
+.aod-brand-card__title {
+  transition-property: transform, text-shadow;
+  transition-duration: var(--duration-quick);
+  transition-timing-function: var(--ease-manifesto);
+}
+.aod-brand-card:hover .aod-brand-card__title,
+.aod-brand-card:focus-visible .aod-brand-card__title {
+  transform: translate(2px, 0);
+  text-shadow: -2px 2px 0 var(--color-revolutionary-red);
+}
+
+/* ============================================================
+ * Reduced motion — global collapse.
+ * Every transition + animation duration drops to 0.01ms (not zero so
+ * transitionend / animationend still fire). Opacity transitions are
+ * implicitly preserved since they're just fast enough to be instant but
+ * don't trigger vestibular issues. Transform-based effects collapse.
+ * ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
