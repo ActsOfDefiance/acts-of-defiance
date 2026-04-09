@@ -94,6 +94,18 @@ Fonts:
 
 Apply families via `style="font-family: var(--font-headline)"` (Tailwind 4 doesn't support `font-headline` as a utility directly).
 
+## Spacing & rhythm
+
+**Full spec:** [`docs/specs/spacing.md`](docs/specs/spacing.md). Read it before adding any margin, padding, or gap.
+
+Quick reference:
+
+- **Scale:** `--spacing-3xs` (4px) through `--spacing-4xl` (128px), plus a pinned `--spacing-rhythm` (28px) for prose paragraph gaps. Tailwind utilities: `p-sm`, `gap-md`, `mt-lg`, `py-section-y`, etc. — all generated from the `@theme` tokens.
+- **Semantic tokens:** `--spacing-section-y` (between major sections), `--spacing-stack` (default vertical rhythm), `--spacing-inline` (inline gap), `--spacing-container-x` / `-x-lg` (horizontal page padding), `--spacing-card-gap`, `--spacing-hero-pb`. Use these over raw scale values when intent matters.
+- **Containers:** `max-w-reading` (700px prose), `max-w-hero` (896px hero text blocks), `max-w-content` (1280px grid). These replace `max-w-2xl/3xl/4xl/7xl/screen-xl` literals.
+- **Forbidden patterns:** raw numeric Tailwind spacing (`mt-12`, `px-6`, `py-24`, `gap-8`), arbitrary values (`mt-[72px]`), raw pixel/rem in inline styles. Use tokens or documented exceptions.
+- **Documented exceptions:** `p-0`/`m-0`/`gap-0` (explicit resets), `pb-0.5` (sub-pixel typography alignment), `max-w-[12ch]` (character-based constraint), `pt-[var(--header-height)]` (bespoke layout constants).
+
 ## Publishing Integration
 
 Content flows: `dime → compendium/ repo → AstroAdapter → src/content/articles/`

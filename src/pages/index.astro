@@ -16,10 +16,10 @@ const articles = (await getCollection("articles", ({ data }) => !data.draft))
 >
   <!-- Hero Section: cinematic. Extends behind fixed header (h = 768 + 64) so no parchment gap shows. -->
   <section class="relative w-full h-[832px] min-h-[564px] overflow-hidden bg-black">
-    <div class="absolute inset-0 hero-gradient flex flex-col justify-end px-8 md:px-16 pb-16">
-      <div class="max-w-4xl space-y-6">
+    <div class="absolute inset-0 hero-gradient flex flex-col justify-end px-container-x md:px-container-x-lg pb-hero-pb">
+      <div class="max-w-hero space-y-stack">
         <span
-          class="inline-block bg-tertiary text-white px-4 py-1 rounded-full font-bold uppercase tracking-widest"
+          class="inline-block bg-tertiary text-white px-sm py-3xs rounded-full font-bold uppercase tracking-widest"
           style="font-family: var(--font-headline); font-size: var(--text-caption)"
         >
           Manifesto
@@ -30,15 +30,15 @@ const articles = (await getCollection("articles", ({ data }) => !data.draft))
         >
           Defiance is an act of hope.
         </h1>
-        <p class="text-gray-200 max-w-2xl leading-relaxed" style="font-size: var(--text-body-lg)">
+        <p class="text-gray-200 max-w-hero leading-relaxed" style="font-size: var(--text-body-lg)">
           Remembering those whose very existence defied injustice — artists,
           organizers, movements, and ordinary people whose existence was itself
           a form of resistance.
         </p>
-        <div class="pt-4">
+        <div class="pt-sm">
           <a
             href="/about"
-            class="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-lg font-black uppercase tracking-widest hover:bg-opacity-90 transition-all active:scale-95 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-warm-gold"
+            class="inline-flex items-center gap-2xs bg-primary text-white px-lg py-sm rounded-lg font-black uppercase tracking-widest hover:bg-opacity-90 transition-all active:scale-95 group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-warm-gold"
             style="font-family: var(--font-headline); font-size: var(--text-caption)"
           >
             Read the Manifesto
@@ -50,18 +50,18 @@ const articles = (await getCollection("articles", ({ data }) => !data.draft))
   </section>
 
   <!-- Recent Articles Feed -->
-  <section class="py-24 px-8 md:px-16">
-    <div class="max-w-7xl mx-auto">
-      <div class="mb-12 border-b-4 border-primary pb-4">
+  <section class="py-section-y px-container-x md:px-container-x-lg">
+    <div class="max-w-content mx-auto">
+      <div class="mb-xl border-b-4 border-primary pb-sm">
         <SectionHead variant="editorial">Recent stories</SectionHead>
       </div>
 
       {articles.length === 0 ? (
-        <p class="text-center text-deep-charcoal/50 py-16 italic" style="font-family: var(--font-label)">
+        <p class="text-center text-deep-charcoal/50 py-2xl italic" style="font-family: var(--font-label)">
           Content will flow here from dime.
         </p>
       ) : (
-        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 list-none p-0">
+        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-card-gap list-none p-0">
           {articles.map((article) => (
             <li>
               <ArticleCard article={article} />

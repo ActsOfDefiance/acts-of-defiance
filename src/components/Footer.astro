@@ -18,15 +18,15 @@ const footerLinks = [
 ];
 ---
 
-<footer class="bg-deep-charcoal text-white py-16 px-8">
-  <div class="max-w-4xl mx-auto text-center space-y-8">
+<footer class="bg-deep-charcoal text-white py-2xl px-container-x md:px-container-x-lg">
+  <div class="max-w-hero mx-auto text-center space-y-lg">
     <p
       class="italic text-warm-gold"
       style="font-family: var(--font-label); font-size: var(--text-body-lg)"
     >
       Remembering those whose very existence defied injustice.
     </p>
-    <nav class="flex flex-wrap justify-center gap-8" aria-label="Footer navigation">
+    <nav class="flex flex-wrap justify-center gap-lg" aria-label="Footer navigation">
       {footerLinks.map((link) => {
         const active = isActive(link.href);
         return (

@@ -6,16 +6,18 @@
 import { CATEGORY_LIST } from "../lib/categories";
 ---
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
   {CATEGORY_LIST.map((cat) => (
     <a
       href={`/categories/${cat.slug}`}
-      class="p-8 px-6 rounded-lg h-64 flex flex-col justify-between group cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all shadow-md relative overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-warm-gold"
+      class="p-lg px-md rounded-lg h-64 flex flex-col justify-between group cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all shadow-md relative overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-warm-gold"
       style={`background:${cat.accent}`}
       aria-label={`Browse ${cat.name}`}
     >
-      <!-- Ghost icon — large, decorative, in the corner -->
-      <div class="absolute -right-8 -top-8 opacity-20 group-hover:opacity-30 transition-opacity" aria-hidden="true">
+      <!-- Ghost icon — large, decorative, in the corner.
+           The -right-lg/-top-lg offset pulls the icon partly off-canvas
+           so the clipped silhouette reads as decoration. -->
+      <div class="absolute -right-lg -top-lg opacity-20 group-hover:opacity-30 transition-opacity" aria-hidden="true">
         <span
           class="material-symbols-outlined text-[120px]"
           style="font-variation-settings: 'FILL' 1;"

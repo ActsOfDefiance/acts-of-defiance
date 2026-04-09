@@ -12,8 +12,11 @@
   color: color-mix(in srgb, var(--color-on-surface) 90%, transparent);
 }
 
+/* Paragraph rhythm — pinned to --spacing-prose-paragraph (28px = one line of
+ * body text at max viewport). Heading margins below override this with their
+ * own em-based values because they should scale with the heading font size. */
 .prose > * + * {
-  margin-top: 1.5em;
+  margin-top: var(--spacing-prose-paragraph);
 }
 
 .prose p {

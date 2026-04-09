@@ -64,6 +64,45 @@
   /* Layout tokens */
   --header-height: 72px;
 
+  /* Spacing scale — see docs/specs/spacing.md
+   *
+   * Stepped (not fluid) atomic scale, every value is n × 0.25rem. The
+   * scale mixes linear small steps (fine UI control) with geometric
+   * large steps (dramatic section breaks), plus one pinned
+   * `--spacing-rhythm` value (1.75rem = 28px) corresponding to one line
+   * of body text at the max viewport.
+   *
+   * Available as Tailwind utilities: p-3xs, gap-sm, mt-rhythm, etc.
+   */
+  --spacing-3xs:    0.25rem;  /*   4px */
+  --spacing-2xs:    0.5rem;   /*   8px */
+  --spacing-xs:     0.75rem;  /*  12px */
+  --spacing-sm:     1rem;     /*  16px */
+  --spacing-md:     1.5rem;   /*  24px */
+  --spacing-rhythm: 1.75rem;  /*  28px — pinned to body line-height at max viewport */
+  --spacing-lg:     2rem;     /*  32px */
+  --spacing-xl:     3rem;     /*  48px */
+  --spacing-2xl:    4rem;     /*  64px */
+  --spacing-3xl:    6rem;     /*  96px */
+  --spacing-4xl:    8rem;     /* 128px */
+
+  /* Semantic spacing layer — intent-carrying aliases for the scale.
+   * Use these whenever intent is stronger than the specific value. */
+  --spacing-section-y:        var(--spacing-3xl);  /* between major page sections */
+  --spacing-stack:            var(--spacing-lg);   /* default vertical stack rhythm */
+  --spacing-inline:           var(--spacing-xs);   /* default inline element gap */
+  --spacing-prose-paragraph:  var(--spacing-rhythm); /* body paragraph separation */
+  --spacing-container-x:      var(--spacing-md);   /* horizontal page padding — mobile */
+  --spacing-container-x-lg:   var(--spacing-xl);   /* horizontal page padding — tablet+ */
+  --spacing-card-gap:         var(--spacing-xl);   /* grid gap between article cards */
+  --spacing-hero-pb:          var(--spacing-xl);   /* bottom padding inside cinematic heroes */
+
+  /* Container max-widths — semantic content-width tokens.
+   * The <Container> primitive in #9 will consume these. */
+  --container-reading:   43.75rem;  /*  700px — long-form reading measure */
+  --container-hero:    56rem;     /*  896px — hero headline + supporting copy block */
+  --container-content: 80rem;     /* 1280px — page-width grid container */
+
   /* Typography — see docs/specs/typography.md
    *
    * Type scale: Augmented Fourth (ratio √2 ≈ 1.4142)

@@ -71,16 +71,16 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
     <div class="absolute inset-0 bg-gradient-to-t from-deep-charcoal via-transparent to-transparent"></div>
   </header>
 
-  <!-- Main content overlaps hero by 24 -->
-  <div class="max-w-screen-xl mx-auto px-6 -mt-24 relative z-10">
+  <!-- Main content overlaps hero (negative margin = -1 × --spacing-3xl) -->
+  <div class="max-w-content mx-auto px-container-x md:px-container-x-lg relative z-10 -mt-3xl">
 
     <!-- Article header: white card -->
-    <div class="bg-white p-8 md:p-12 shadow-sm">
-      <div class="flex flex-col items-start gap-4">
+    <div class="bg-white p-lg md:p-xl shadow-sm">
+      <div class="flex flex-col items-start gap-sm">
 
         <!-- Category pill -->
         <span
-          class="px-4 py-1 font-black uppercase tracking-widest rounded-full"
+          class="px-sm py-3xs font-black uppercase tracking-widest rounded-full"
           style={`font-family: var(--font-headline); font-size: var(--text-caption); ${badge}`}
         >
           {CATEGORIES[article.data.category as CategorySlug]?.name ?? article.data.category}
@@ -88,22 +88,22 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
 
         <!-- Headline -->
         <h1
-          class="uppercase tracking-tighter max-w-4xl text-on-surface"
+          class="uppercase tracking-tighter max-w-hero text-on-surface"
           style="font-family: var(--font-headline); font-size: var(--text-h1); line-height: 1"
         >
           {article.data.title}
         </h1>
 
         <!-- Date + tags row -->
-        <div class="flex flex-wrap items-center gap-4 text-on-surface-variant mt-4" style="font-size: var(--text-caption)">
+        <div class="flex flex-wrap items-center gap-sm text-on-surface-variant mt-sm" style="font-size: var(--text-caption)">
           <span style="font-family: var(--font-label)" class="italic">
             {dateStr}
           </span>
           {article.data.tags.length > 0 && (
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-2xs">
               {article.data.tags.map((tag) => (
                 <span
-                  class="px-2 py-0.5 bg-surface-container-high uppercase font-bold tracking-tight text-on-surface-variant"
+                  class="px-2xs py-3xs bg-surface-container-high uppercase font-bold tracking-tight text-on-surface-variant"
                   style="font-size: var(--text-caption)"
                 >
                   {tag}
@@ -119,32 +119,32 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
         Deep Dive split ships when dime emits the short version; for now
         Deep Dive is the only content variant. See ticket for details.
       -->
-      <div class="flex gap-4 mt-12 border-t border-outline-variant pt-8">
+      <div class="flex gap-sm mt-xl border-t border-outline-variant pt-lg">
         <!-- Short Read (inactive) -->
-        <div class="flex-1 text-left p-6 bg-surface-container text-on-surface cursor-default">
-          <div class="uppercase font-bold tracking-widest opacity-60 mb-2" style="font-family: var(--font-headline); font-size: var(--text-caption)">
+        <div class="flex-1 text-left p-md bg-surface-container text-on-surface cursor-default">
+          <div class="uppercase font-bold tracking-widest opacity-60 mb-2xs" style="font-family: var(--font-headline); font-size: var(--text-caption)">
             Short Read
           </div>
           <div class="font-bold leading-tight" style="font-family: var(--font-headline); font-size: var(--text-body-lg)">
             The Story
           </div>
-          <div class="h-1 w-0 bg-primary-container mt-4"></div>
+          <div class="h-1 w-0 bg-primary-container mt-sm"></div>
         </div>
         <!-- Deep Dive (active) -->
-        <div class="flex-1 text-left p-6 bg-white border-b-4 border-primary-container shadow-md cursor-default">
-          <div class="uppercase font-bold tracking-widest text-primary-md mb-2" style="font-family: var(--font-headline); font-size: var(--text-caption)">
+        <div class="flex-1 text-left p-md bg-white border-b-4 border-primary-container shadow-md cursor-default">
+          <div class="uppercase font-bold tracking-widest text-primary-md mb-2xs" style="font-family: var(--font-headline); font-size: var(--text-caption)">
             Full Research
           </div>
           <div class="font-bold leading-tight text-on-surface" style="font-family: var(--font-headline); font-size: var(--text-body-lg)">
             Deep Dive
           </div>
-          <div class="h-1 w-full bg-primary-container mt-4"></div>
+          <div class="h-1 w-full bg-primary-container mt-sm"></div>
         </div>
       </div>
     </div>
 
     <!-- Article body: parchment background -->
-    <article class="bg-parchment py-16 md:py-24 px-6 md:px-0">
+    <article class="bg-parchment py-2xl md:py-section-y px-container-x md:px-0">
       <Prose>
         <Content />
       </Prose>
@@ -152,18 +152,18 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
 
     <!-- Related articles -->
     {related.length > 0 && (
-      <section class="py-24 border-t border-outline-variant">
-        <div class="mb-12">
+      <section class="py-section-y border-t border-outline-variant">
+        <div class="mb-xl">
           <SectionHead variant="structural">More acts of defiance</SectionHead>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
           {related.map((rel) => {
             const tint = tintFor(rel.data.category);
             const relBadge = badgeStyle(rel.data.category);
             const relCat = CATEGORIES[rel.data.category as CategorySlug];
             return (
               <a href={`/articles/${rel.id}`} class="group cursor-pointer block">
-                <div class="aspect-[4/5] bg-surface-container-highest relative overflow-hidden mb-6">
+                <div class="aspect-[4/5] bg-surface-container-highest relative overflow-hidden mb-md">
                   {rel.data.images?.hero ? (
                     <img
                       src={`/images/articles/${rel.data.images.hero}`}
@@ -179,15 +179,15 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
                     class="absolute inset-0 mix-blend-multiply opacity-20 group-hover:opacity-0 transition-opacity"
                     style={tint}
                   ></div>
-                  <div class="absolute bottom-6 left-6 right-6">
+                  <div class="absolute bottom-md left-md right-md">
                     <span
-                      class="px-3 py-1 font-black uppercase tracking-widest rounded-none"
+                      class="px-xs py-3xs font-black uppercase tracking-widest rounded-none"
                       style={`font-family: var(--font-headline); font-size: var(--text-caption); ${relBadge}`}
                     >
                       {relCat?.name ?? rel.data.category}
                     </span>
                     <h4
-                      class="text-white uppercase mt-2 drop-shadow-lg"
+                      class="text-white uppercase mt-2xs drop-shadow-lg"
                       style="font-family: var(--font-headline); font-size: var(--text-h4); line-height: 1"
                     >
                       {rel.data.title}
@@ -201,6 +201,6 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
       </section>
     )}
 
-  </div><!-- /max-w-screen-xl -->
+  </div><!-- /max-w-content -->
 
 </BaseLayout>
