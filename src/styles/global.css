@@ -255,8 +255,8 @@ h1, h2, h3, h4, h5, h6 {
  * edge of the standard 2px / offset-4px outline so it's visible beyond
  * the ring, not hidden underneath it. */
 @keyframes aod-focus-pulse {
-  0%   { box-shadow: 0 0 0 6px  rgba(212, 168, 67, 0.9); }
-  100% { box-shadow: 0 0 0 24px rgba(212, 168, 67, 0); }
+  0%   { box-shadow: 0 0 0 6px  color-mix(in srgb, var(--color-warm-gold) 90%, transparent); }
+  100% { box-shadow: 0 0 0 24px color-mix(in srgb, var(--color-warm-gold) 0%,  transparent); }
 }
 
 /* Helper: .aod-focus-ring — the canonical focus indicator. Applies the
@@ -293,6 +293,10 @@ h1, h2, h3, h4, h5, h6 {
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform var(--duration-arrive) var(--ease-manifesto);
+}
+.aod-brand-link:hover,
+.aod-brand-link:focus-visible {
+  color: var(--color-warm-gold);
 }
 .aod-brand-link:hover::after,
 .aod-brand-link:focus-visible::after {
