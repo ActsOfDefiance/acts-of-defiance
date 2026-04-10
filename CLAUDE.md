@@ -72,7 +72,7 @@ All tokens defined as Tailwind `@theme` vars in `src/styles/global.css`:
 | `movement-teal` / `tertiary` | `#2a7b88` | Organizations badge |
 | `deep-charcoal` | `#1a1a1a` | Header/footer bg, body text |
 | `parchment` / `surface` | `#f5edd6` | Page background |
-| `earth-brown` | `#6b4226` | People badge, muted text |
+| `earth-brown` | `#795548` | People badge, muted text |
 
 Category accent colors are the single source of truth in `src/lib/categories.ts`. There are no `bg-category-*` Tailwind classes — apply category color via the `badgeStyle(slug)` helper or read `CATEGORIES[slug].accent` directly.
 
@@ -117,13 +117,26 @@ Quick reference:
 
 Quick reference — all in `src/components/layout/`:
 
-- **`<Container width="content|hero|reading">`** — max-width + horizontal padding. Default: `content` (1280px). Every page section should be wrapped.
+- **`<Container width="content|hero|reading" padded={true|false}>`** — max-width + horizontal padding. Default: `content` (1280px). `padded={false}` omits horizontal padding (for cases where a parent already provides it). Every page section should be wrapped.
 - **`<Stack gap="token">`** — vertical rhythm (`flex flex-col gap-{token}`). Default gap: `stack` (32px). Add `class="items-start"` when children should be intrinsically sized.
 - **`<Cluster gap="token" justify="..." align="...">`** — wrapping inline group (`flex flex-wrap`). Default gap: `inline` (12px).
 - **`<Grid cols="1 md:2 lg:3" gap="token">`** — responsive column grid. Default gap: `card-gap` (48px). Cols string parsed into breakpoint classes.
 - **`<Center>`** — `text-center` wrapper for headings, empty states.
 - **All accept `as` prop** for semantic HTML (`as="section"`, `as="ul"`, `as="nav"`).
 - **Forbidden patterns in page templates:** raw `max-w-* mx-auto px-*`, `space-y-*`, `flex flex-wrap gap-*`, `grid grid-cols-*`. Use the primitives.
+
+## Buttons & links
+
+**Full spec:** [`docs/specs/buttons.md`](docs/specs/buttons.md). Read it before adding any CTA or interactive button.
+
+Quick reference:
+
+- **`<Button>`** — single component for all CTAs. Renders `<a>` when `href` is provided, `<button>` otherwise. Defaults to `type="button"` to prevent accidental form submission.
+- **Variants:** `primary` (red/white), `secondary` (gold/charcoal), `ghost` (transparent + border), `link` (text-only underline sweep).
+- **Sizes:** `sm` (`px-sm py-3xs`, caption), `md` (default, `px-lg py-sm`, caption), `lg` (`px-xl py-md`, body).
+- **Motion:** primary/secondary/ghost use `aod-brand-btn` letterpress + `aod-focus-ring`. Link variant uses `aod-brand-link` underline sweep.
+- **Disabled:** `pointer-events-none` on all variants; `<button>` gets `disabled`, `<a>` gets `aria-disabled="true"` + `tabindex="-1"`. CSS handles visual dimming per variant via `:disabled` and `[aria-disabled="true"]` selectors.
+- **Forbidden patterns:** raw `<a class="bg-primary text-white ...">` or `<button class="bg-revolutionary-red ...">` in page templates. Use `<Button>`. Nav links in header/footer use `aod-brand-link` directly (not `<Button>`).
 
 ## Spacing & rhythm
 
