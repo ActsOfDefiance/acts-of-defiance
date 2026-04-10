@@ -4,6 +4,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Prose from "../../components/Prose.astro";
 import SectionHead from "../../components/SectionHead.astro";
 import { CATEGORIES, badgeStyle, type CategorySlug } from "../../lib/categories";
+import Container from "../../components/layout/Container.astro";
+import Stack from "../../components/layout/Stack.astro";
+import Cluster from "../../components/layout/Cluster.astro";
+import Grid from "../../components/layout/Grid.astro";
 
 export async function getStaticPaths() {
   // Exclude drafts — drafts must not be reachable at /articles/[slug] in
@@ -71,12 +75,12 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
     <div class="absolute inset-0 bg-gradient-to-t from-deep-charcoal via-transparent to-transparent"></div>
   </header>
 
-  <!-- Main content overlaps hero (negative margin = -1 × --spacing-3xl) -->
-  <div class="max-w-content mx-auto px-container-x md:px-container-x-lg relative z-10 -mt-3xl">
+  <!-- Main content overlaps hero -->
+  <Container class="relative z-10 -mt-3xl">
 
     <!-- Article header: white card -->
     <div class="bg-white p-lg md:p-xl shadow-sm">
-      <div class="flex flex-col items-start gap-sm">
+      <Stack gap="sm" class="items-start">
 
         <!-- Category pill — stamps in on page load via .motion-stamp-in -->
         <span
@@ -95,12 +99,12 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
         </h1>
 
         <!-- Date + tags row -->
-        <div class="flex flex-wrap items-center gap-sm text-on-surface-variant mt-sm" style="font-size: var(--text-caption)">
+        <Cluster gap="sm" align="center" class="text-on-surface-variant mt-sm" style="font-size: var(--text-caption)">
           <span style="font-family: var(--font-label)" class="italic">
             {dateStr}
           </span>
           {article.data.tags.length > 0 && (
-            <div class="flex flex-wrap gap-2xs">
+            <Cluster gap="2xs">
               {article.data.tags.map((tag) => (
                 <span
                   class="px-2xs py-3xs bg-surface-container-high uppercase font-bold tracking-tight text-on-surface-variant"
@@ -109,10 +113,10 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
                   {tag}
                 </span>
               ))}
-            </div>
+            </Cluster>
           )}
-        </div>
-      </div>
+        </Cluster>
+      </Stack>
 
       <!--
         Content version selector — UI scaffolding only. The Short Read /
@@ -156,7 +160,7 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
         <div class="mb-xl">
           <SectionHead variant="structural">More acts of defiance</SectionHead>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+        <Grid cols="1 md:3" gap="lg">
           {related.map((rel) => {
             const tint = tintFor(rel.data.category);
             const relBadge = badgeStyle(rel.data.category);
@@ -197,10 +201,10 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
               </a>
             );
           })}
-        </div>
+        </Grid>
       </section>
     )}
 
-  </div><!-- /max-w-content -->
+  </Container>
 
 </BaseLayout>

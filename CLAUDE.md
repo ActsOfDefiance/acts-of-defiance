@@ -111,6 +111,20 @@ Quick reference:
 - **Forbidden patterns:** `transition-colors`/`transition-all`/`duration-300`/`ease-in-out` (or any Tailwind default transition utility). Hardcoded ms values. `cubic-bezier(...)` literals outside `global.css`. Bare `:hover` color swaps without going through `.aod-brand-link` for nav links.
 - **Reduced motion:** global `@media (prefers-reduced-motion: reduce)` rule in `global.css` collapses all transitions and animations to `0.01ms`.
 
+## Layout primitives
+
+**Full spec:** [`docs/specs/layout.md`](docs/specs/layout.md). Read it before adding any page-level layout.
+
+Quick reference — all in `src/components/layout/`:
+
+- **`<Container width="content|hero|reading">`** — max-width + horizontal padding. Default: `content` (1280px). Every page section should be wrapped.
+- **`<Stack gap="token">`** — vertical rhythm (`flex flex-col gap-{token}`). Default gap: `stack` (32px). Add `class="items-start"` when children should be intrinsically sized.
+- **`<Cluster gap="token" justify="..." align="...">`** — wrapping inline group (`flex flex-wrap`). Default gap: `inline` (12px).
+- **`<Grid cols="1 md:2 lg:3" gap="token">`** — responsive column grid. Default gap: `card-gap` (48px). Cols string parsed into breakpoint classes.
+- **`<Center>`** — `text-center` wrapper for headings, empty states.
+- **All accept `as` prop** for semantic HTML (`as="section"`, `as="ul"`, `as="nav"`).
+- **Forbidden patterns in page templates:** raw `max-w-* mx-auto px-*`, `space-y-*`, `flex flex-wrap gap-*`, `grid grid-cols-*`. Use the primitives.
+
 ## Spacing & rhythm
 
 **Full spec:** [`docs/specs/spacing.md`](docs/specs/spacing.md). Read it before adding any margin, padding, or gap.

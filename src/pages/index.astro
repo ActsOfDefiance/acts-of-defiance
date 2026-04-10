@@ -3,6 +3,10 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ArticleCard from "../components/ArticleCard.astro";
 import SectionHead from "../components/SectionHead.astro";
+import Container from "../components/layout/Container.astro";
+import Stack from "../components/layout/Stack.astro";
+import Grid from "../components/layout/Grid.astro";
+import Center from "../components/layout/Center.astro";
 
 const articles = (await getCollection("articles", ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -17,7 +21,7 @@ const articles = (await getCollection("articles", ({ data }) => !data.draft))
   <!-- Hero Section: cinematic. Extends behind fixed header (h = 768 + 64) so no parchment gap shows. -->
   <section class="relative w-full h-[832px] min-h-[564px] overflow-hidden bg-black">
     <div class="absolute inset-0 hero-gradient flex flex-col justify-end px-container-x md:px-container-x-lg pb-hero-pb">
-      <div class="max-w-hero space-y-stack">
+      <Stack gap="stack" class="max-w-hero items-start">
         <span
           class="motion-stamp-in inline-block bg-tertiary text-white px-sm py-3xs rounded-full font-bold uppercase tracking-widest"
           style="font-family: var(--font-headline); font-size: var(--text-caption)"
@@ -49,30 +53,30 @@ const articles = (await getCollection("articles", ({ data }) => !data.draft))
             >arrow_forward</span>
           </a>
         </div>
-      </div>
+      </Stack>
     </div>
   </section>
 
   <!-- Recent Articles Feed -->
-  <section class="py-section-y px-container-x md:px-container-x-lg">
-    <div class="max-w-content mx-auto">
-      <div class="mb-xl border-b-4 border-primary pb-sm">
-        <SectionHead variant="editorial">Recent stories</SectionHead>
-      </div>
+  <Container as="section" class="py-section-y">
+    <div class="mb-xl border-b-4 border-primary pb-sm">
+      <SectionHead variant="editorial">Recent stories</SectionHead>
+    </div>
 
-      {articles.length === 0 ? (
-        <p class="text-center text-deep-charcoal/50 py-2xl italic" style="font-family: var(--font-label)">
+    {articles.length === 0 ? (
+      <Center class="py-2xl">
+        <p class="text-deep-charcoal/50 italic" style="font-family: var(--font-label)">
           Content will flow here from dime.
         </p>
-      ) : (
-        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-card-gap list-none p-0">
-          {articles.map((article) => (
-            <li>
-              <ArticleCard article={article} />
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  </section>
+      </Center>
+    ) : (
+      <Grid as="ul" class="list-none p-0">
+        {articles.map((article) => (
+          <li>
+            <ArticleCard article={article} />
+          </li>
+        ))}
+      </Grid>
+    )}
+  </Container>
 </BaseLayout>

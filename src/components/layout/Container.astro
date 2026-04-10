@@ -1,0 +1,44 @@
+---
+// Container — max-width + horizontal padding wrapper.
+//
+// Consumes the --container-* tokens from the spacing spec. Every page-level
+// content block should be wrapped in a Container so width + padding are
+// governed by the design system, not ad-hoc utility classes.
+//
+// Usage:
+//   <Container>                              <!-- default: content (1280px) -->
+//   <Container width="hero">                 <!-- hero text block (896px) -->
+//   <Container width="reading">              <!-- long-form prose (700px) -->
+//   <Container as="section" class="py-section-y">
+//   <Container padded={false}>               <!-- no horizontal padding -->
+
+interface Props {
+  /** Which max-width token to use. */
+  width?: "reading" | "hero" | "content";
+  /** Whether to apply horizontal padding. Default: true. */
+  padded?: boolean;
+  /** HTML element to render. Default: div. */
+  as?: string;
+  /** Extra classes appended after the layout classes. */
+  class?: string;
+  /** Pass-through HTML attributes (id, aria-*, data-*, style, etc.) */
+  [key: string]: any;
+}
+
+const {
+  width = "content",
+  padded = true,
+  as: Tag = "div",
+  class: className = "",
+  ...rest
+} = Astro.props;
+
+const widthClass = `max-w-${width}`;
+---
+
+<Tag
+  class:list={[widthClass, "mx-auto", padded && "px-container-x md:px-container-x-lg", className]}
+  {...rest}
+>
+  <slot />
+</Tag>
