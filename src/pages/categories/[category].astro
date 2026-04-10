@@ -104,7 +104,7 @@ const tags = [...tagSet].sort();
         <Grid as="ul" class="list-none p-0">
           {articles.map((article, i) => (
             <li>
-              <ArticleCard article={article} />
+              <ArticleCard article={article} bordered variant={i} />
             </li>
           ))}
         </Grid>
