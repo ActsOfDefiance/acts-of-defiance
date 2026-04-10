@@ -1,0 +1,78 @@
+---
+// Button — single CTA component for Acts of Defiance.
+//
+// Renders <a> when href is provided, <button> otherwise.
+// All four variants consume the motion tokens from global.css:
+//   - primary, secondary, ghost: .aod-brand-btn (letterpress) + .aod-focus-ring
+//   - link: .aod-brand-link (underline sweep) + .aod-focus-ring
+//
+// Usage:
+//   <Button href="/about">Read the Manifesto</Button>
+//   <Button variant="secondary" size="sm">Subscribe</Button>
+//   <Button variant="ghost" type="button">Cancel</Button>
+//   <Button variant="link" href="/about">inline link text</Button>
+
+interface Props {
+  /** Visual style. Default: "primary". */
+  variant?: "primary" | "secondary" | "ghost" | "link";
+  /** Size. Default: "md". */
+  size?: "sm" | "md" | "lg";
+  /** When present, renders an <a> tag. */
+  href?: string;
+  /** Disabled state — only meaningful on <button>. */
+  disabled?: boolean;
+  /** Extra classes appended last. */
+  class?: string;
+  /** Pass-through attributes (type, aria-*, data-*, etc.) */
+  [key: string]: any;
+}
+
+const {
+  variant = "primary",
+  size = "md",
+  href,
+  disabled = false,
+  class: className = "",
+  ...rest
+} = Astro.props;
+
+const Tag = href ? "a" : "button";
+
+// Size → padding + font-size (token-based, no raw px)
+const sizeClasses: Record<string, string> = {
+  sm: "px-sm py-3xs",
+  md: "px-lg py-sm",
+  lg: "px-xl py-md",
+};
+const fontSizes: Record<string, string> = {
+  sm: "var(--text-caption)",
+  md: "var(--text-caption)",
+  lg: "var(--text-body)",
+};
+
+const isLink = variant === "link";
+
+// Base layout classes shared by all non-link variants
+const baseClasses = isLink
+  ? "aod-brand-link aod-focus-ring rounded-sm"
+  : [
+      "aod-brand-btn aod-focus-ring",
+      "inline-flex items-center gap-2xs",
+      "rounded-lg font-black uppercase tracking-widest",
+      "select-none",
+      sizeClasses[size],
+      `aod-btn-${variant}`,
+      disabled ? "pointer-events-none opacity-50" : "",
+    ].join(" ");
+---
+
+<Tag
+  href={href}
+  disabled={Tag === "button" && disabled ? true : undefined}
+  aria-disabled={Tag === "a" && disabled ? "true" : undefined}
+  class:list={[baseClasses, className]}
+  style={`font-family: var(--font-headline); font-size: ${fontSizes[size]}`}
+  {...rest}
+>
+  <slot />
+</Tag>
