@@ -132,11 +132,11 @@ Quick reference — all in `src/components/layout/`:
 Quick reference:
 
 - **`<Button>`** — single component for all CTAs. Renders `<a>` when `href` is provided, `<button>` otherwise. Defaults to `type="button"` to prevent accidental form submission.
-- **Variants:** `primary` (red/white), `secondary` (gold/charcoal), `ghost` (transparent + border), `link` (text-only underline sweep).
+- **Variants:** `primary` (default, red/white), `secondary` (gold/charcoal), `ghost` (transparent + border), `link` (text-only underline sweep).
 - **Sizes:** `sm` (`px-sm py-3xs`, caption), `md` (default, `px-lg py-sm`, caption), `lg` (`px-xl py-md`, body).
 - **Motion:** primary/secondary/ghost use `aod-brand-btn` letterpress + `aod-focus-ring`. Link variant uses `aod-brand-link` underline sweep.
 - **Disabled:** `pointer-events-none` on all variants; `<button>` gets `disabled`, `<a>` gets `aria-disabled="true"` + `tabindex="-1"`. CSS handles visual dimming per variant via `:disabled` and `[aria-disabled="true"]` selectors.
-- **Forbidden patterns:** raw `<a class="bg-primary text-white ...">` or `<button class="bg-revolutionary-red ...">` in page templates. Use `<Button>`. Nav links in header/footer use `aod-brand-link` directly (not `<Button>`).
+- **Forbidden patterns:** raw `<a class="bg-primary text-white ...">` or `<button class="bg-revolutionary-red ...">` in page templates. Use `<Button>`. Nav links in header/footer use `aod-brand-link` + `aod-focus-ring` directly (not `<Button>`).
 
 ## Spacing & rhythm
 
