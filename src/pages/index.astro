@@ -7,6 +7,7 @@ import Container from "../components/layout/Container.astro";
 import Stack from "../components/layout/Stack.astro";
 import Grid from "../components/layout/Grid.astro";
 import Center from "../components/layout/Center.astro";
+import Button from "../components/Button.astro";
 
 const articles = (await getCollection("articles", ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -40,18 +41,14 @@ const articles = (await getCollection("articles", ({ data }) => !data.draft))
           a form of resistance.
         </p>
         <div class="pt-sm">
-          <a
-            href="/about"
-            class="aod-brand-btn aod-focus-ring inline-flex items-center gap-2xs bg-primary text-white px-lg py-sm rounded-lg font-black uppercase tracking-widest hover:bg-opacity-90 group"
-            style="font-family: var(--font-headline); font-size: var(--text-caption)"
-          >
+          <Button href="/about" variant="primary" class="group">
             Read the Manifesto
             <span
               class="material-symbols-outlined group-hover:translate-x-1"
               style="transition: transform var(--duration-arrive) var(--ease-manifesto)"
               aria-hidden="true"
             >arrow_forward</span>
-          </a>
+          </Button>
         </div>
       </Stack>
     </div>

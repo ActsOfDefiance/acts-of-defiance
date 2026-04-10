@@ -364,6 +364,65 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ============================================================
+ * Button variants — consumed by src/components/Button.astro.
+ *
+ * Base motion comes from .aod-brand-btn (letterpress press) and
+ * .aod-focus-ring (focus pulse), which Button always applies.
+ * These classes handle only color + border identity per variant.
+ * ============================================================ */
+
+/* primary — revolutionary red, white text */
+.aod-btn-primary {
+  background-color: var(--color-revolutionary-red);
+  color: var(--color-white);
+  border: 2px solid transparent;
+}
+.aod-btn-primary:hover {
+  background-color: color-mix(in srgb, var(--color-revolutionary-red) 85%, black);
+}
+.aod-btn-primary:disabled,
+.aod-btn-primary[aria-disabled="true"] {
+  background-color: color-mix(in srgb, var(--color-revolutionary-red) 40%, white);
+  cursor: not-allowed;
+}
+
+/* secondary — warm gold, deep-charcoal text */
+.aod-btn-secondary {
+  background-color: var(--color-warm-gold);
+  color: var(--color-deep-charcoal);
+  border: 2px solid transparent;
+}
+.aod-btn-secondary:hover {
+  background-color: color-mix(in srgb, var(--color-warm-gold) 85%, black);
+}
+.aod-btn-secondary:disabled,
+.aod-btn-secondary[aria-disabled="true"] {
+  background-color: color-mix(in srgb, var(--color-warm-gold) 40%, white);
+  cursor: not-allowed;
+}
+
+/* ghost — transparent with deep-charcoal border; press plate uses border color */
+.aod-btn-ghost {
+  background-color: transparent;
+  color: var(--color-deep-charcoal);
+  border: 2px solid var(--color-deep-charcoal);
+  box-shadow: 0 2px 0 0 color-mix(in srgb, var(--color-deep-charcoal) 50%, transparent);
+}
+.aod-btn-ghost:hover {
+  background-color: color-mix(in srgb, var(--color-deep-charcoal) 8%, transparent);
+}
+.aod-btn-ghost:disabled,
+.aod-btn-ghost[aria-disabled="true"] {
+  border-color: color-mix(in srgb, var(--color-deep-charcoal) 30%, transparent);
+  color: color-mix(in srgb, var(--color-deep-charcoal) 30%, transparent);
+  cursor: not-allowed;
+}
+
+/* link — text only, uses aod-brand-link underline sweep (no letterpress).
+ * Applied via the component's class list; no separate CSS class needed here.
+ * Documented for completeness. */
+
+/* ============================================================
  * Reduced motion — global collapse.
  * Every transition + animation duration drops to 0.01ms (not zero so
  * transitionend / animationend still fire). Opacity transitions are
