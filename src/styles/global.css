@@ -379,11 +379,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 .aod-btn-primary:hover {
   background-color: color-mix(in srgb, var(--color-revolutionary-red) 85%, black);
-  transition-property: background-color;
-  transition-duration: var(--duration-quick);
-  transition-timing-function: var(--ease-manifesto);
 }
-.aod-btn-primary:disabled {
+.aod-btn-primary:disabled,
+.aod-btn-primary[aria-disabled="true"] {
   background-color: color-mix(in srgb, var(--color-revolutionary-red) 40%, white);
   cursor: not-allowed;
 }
@@ -396,11 +394,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 .aod-btn-secondary:hover {
   background-color: color-mix(in srgb, var(--color-warm-gold) 85%, black);
-  transition-property: background-color;
-  transition-duration: var(--duration-quick);
-  transition-timing-function: var(--ease-manifesto);
 }
-.aod-btn-secondary:disabled {
+.aod-btn-secondary:disabled,
+.aod-btn-secondary[aria-disabled="true"] {
   background-color: color-mix(in srgb, var(--color-warm-gold) 40%, white);
   cursor: not-allowed;
 }
@@ -414,11 +410,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 .aod-btn-ghost:hover {
   background-color: color-mix(in srgb, var(--color-deep-charcoal) 8%, transparent);
-  transition-property: background-color;
-  transition-duration: var(--duration-quick);
-  transition-timing-function: var(--ease-manifesto);
 }
-.aod-btn-ghost:disabled {
+.aod-btn-ghost:disabled,
+.aod-btn-ghost[aria-disabled="true"] {
   border-color: color-mix(in srgb, var(--color-deep-charcoal) 30%, transparent);
   color: color-mix(in srgb, var(--color-deep-charcoal) 30%, transparent);
   cursor: not-allowed;

@@ -19,7 +19,7 @@ interface Props {
   size?: "sm" | "md" | "lg";
   /** When present, renders an <a> tag. */
   href?: string;
-  /** Disabled state — only meaningful on <button>. */
+  /** Disabled state — sets aria-disabled on <a>, disabled on <button>, and removes from tab order. */
   disabled?: boolean;
   /** Extra classes appended last. */
   class?: string;
@@ -52,7 +52,6 @@ const fontSizes: Record<string, string> = {
 
 const isLink = variant === "link";
 
-// Base layout classes shared by all non-link variants
 const baseClasses = isLink
   ? "aod-brand-link aod-focus-ring rounded-sm"
   : [
@@ -62,15 +61,16 @@ const baseClasses = isLink
       "select-none",
       sizeClasses[size],
       `aod-btn-${variant}`,
-      disabled ? "pointer-events-none opacity-50" : "",
     ].join(" ");
 ---
 
 <Tag
   href={href}
+  type={Tag === "button" ? "button" : undefined}
   disabled={Tag === "button" && disabled ? true : undefined}
   aria-disabled={Tag === "a" && disabled ? "true" : undefined}
-  class:list={[baseClasses, className]}
+  tabindex={Tag === "a" && disabled ? -1 : undefined}
+  class:list={[baseClasses, disabled && "pointer-events-none", className]}
   style={`font-family: var(--font-headline); font-size: ${fontSizes[size]}`}
   {...rest}
 >
