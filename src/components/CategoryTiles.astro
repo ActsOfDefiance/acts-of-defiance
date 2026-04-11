@@ -1,50 +1,43 @@
 ---
-// Four-up category tile grid lifted from ../art/comps/v3/home.html.
-// Each tile: solid accent bg, ghost icon in upper-right, smaller icon
-// upper-left, category name at the bottom. Used on the about page
-// (and intended for the home page newsletter section eventually).
+// Four-up category tile grid.
+// Uses literal grid classes (not <Grid>) so Tailwind's JIT scanner
+// can detect grid-cols-2 / lg:grid-cols-4 as static strings.
+// Tiles are aspect-square so they stay visually square at all breakpoints.
 import { CATEGORY_LIST } from "../lib/categories";
-import Grid from "./layout/Grid.astro";
+import CategoryIcon from "./CategoryIcon.astro";
 ---
 
-<Grid cols="1 sm:2 lg:4" gap="md">
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-md">
   {CATEGORY_LIST.map((cat) => (
     <a
       href={`/categories/${cat.slug}`}
-      class="aod-brand-card aod-focus-ring p-lg px-md rounded-lg h-64 flex flex-col justify-between group cursor-pointer shadow-md relative overflow-hidden"
+      class="aod-brand-card aod-focus-ring aspect-square p-lg px-md rounded-lg flex flex-col justify-between group cursor-pointer shadow-md relative overflow-hidden"
       style={`background:${cat.accent}`}
       aria-label={`Browse ${cat.name}`}
     >
-      <!-- Ghost icon — large, decorative, in the corner.
-           The -right-lg/-top-lg offset pulls the icon partly off-canvas
-           so the clipped silhouette reads as decoration. -->
+      <!--
+        Ghost icon — large, decorative, partially clipped off the upper-right corner.
+        Scales up slightly on hover alongside the opacity lift.
+      -->
       <div
-        class="absolute -right-lg -top-lg opacity-20 group-hover:opacity-30"
-        style="transition: opacity var(--duration-quick) var(--ease-manifesto)"
+        class="absolute -right-lg -top-lg opacity-20 group-hover:opacity-30 group-hover:scale-125"
+        style="transition: opacity var(--duration-quick) var(--ease-manifesto), transform var(--duration-declare) var(--ease-defiant)"
         aria-hidden="true"
       >
-        <span
-          class="material-symbols-outlined text-[120px]"
-          style="font-variation-settings: 'FILL' 1;"
-        >
-          {cat.icon}
-        </span>
+        <CategoryIcon slug={cat.slug} size={112} />
       </div>
+
       <!-- Front icon -->
-      <div class="relative z-10" aria-hidden="true">
-        <span
-          class="material-symbols-outlined text-4xl text-white block"
-          style="font-variation-settings: 'FILL' 1;"
-        >
-          {cat.icon}
-        </span>
+      <div class="relative z-10">
+        <CategoryIcon slug={cat.slug} size={40} />
       </div>
+
       <h3
-        class="font-bold text-white uppercase tracking-tight leading-none relative z-10 truncate"
+        class="aod-brand-card__title font-bold text-white uppercase tracking-tight leading-none relative z-10 truncate"
         style="font-family: var(--font-headline); font-size: var(--text-body-lg)"
       >
         {cat.name}
       </h3>
     </a>
   ))}
-</Grid>
+</div>
