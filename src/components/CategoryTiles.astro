@@ -20,8 +20,7 @@ import CategoryIcon from "./CategoryIcon.astro";
         Scales up slightly on hover alongside the opacity lift.
       -->
       <div
-        class="absolute -right-lg -top-lg opacity-20 group-hover:opacity-30 group-hover:scale-125"
-        style="transition: opacity var(--duration-quick) var(--ease-manifesto), transform var(--duration-declare) var(--ease-defiant)"
+        class="category-tile__ghost absolute -right-lg -top-lg opacity-20 group-hover:opacity-30 group-hover:scale-125"
         aria-hidden="true"
       >
         <CategoryIcon slug={cat.slug} size={112} />
@@ -41,3 +40,11 @@ import CategoryIcon from "./CategoryIcon.astro";
     </a>
   ))}
 </div>
+
+<style>
+  .category-tile__ghost {
+    transition:
+      opacity var(--duration-quick) var(--ease-manifesto),
+      transform var(--duration-declare) var(--ease-defiant);
+  }
+</style>

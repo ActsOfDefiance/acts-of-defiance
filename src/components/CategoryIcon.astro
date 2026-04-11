@@ -36,8 +36,8 @@ const { slug, size = 40, class: className = "" } = Astro.props;
     <rect x="32" y="24" width="7" height="57" rx="3" />
     <!-- Right notehead (higher pitch — ascending) -->
     <ellipse cx="63" cy="59" rx="17" ry="11" transform="rotate(-25, 63, 59)" />
-    <!-- Right stem — same height as left stem -->
-    <rect x="76" y="4" width="7" height="57" rx="3" />
+    <!-- Right stem — same height as left stem; y=7 keeps top behind beam -->
+    <rect x="76" y="7" width="7" height="54" rx="3" />
     <!-- Beam: angled ascending left→right, covers stem tops -->
     <polygon points="32,24 83,4 83,14 32,34" />
   </svg>

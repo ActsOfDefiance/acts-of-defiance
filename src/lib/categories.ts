@@ -13,8 +13,6 @@ export interface Category {
   accent: string;
   /** Foreground color to pair with the accent for accessible contrast. */
   accentText: string;
-  /** Material Symbols Outlined icon name used by the CategoryTiles grid. */
-  icon: string;
 }
 
 export const CATEGORIES: Record<CategorySlug, Category> = {
@@ -24,7 +22,6 @@ export const CATEGORIES: Record<CategorySlug, Category> = {
     tagline: "Art is a hammer to shape reality.",
     accent: "#795900",
     accentText: "#ffffff",
-    icon: "brush",
   },
   movements: {
     slug: "movements",
@@ -32,7 +29,6 @@ export const CATEGORIES: Record<CategorySlug, Category> = {
     tagline: "Every movement started with someone who refused.",
     accent: "#c23b22",
     accentText: "#ffffff",
-    icon: "groups",
   },
   organizations: {
     slug: "organizations",
@@ -40,7 +36,6 @@ export const CATEGORIES: Record<CategorySlug, Category> = {
     tagline: "Structure is how survival becomes strategy.",
     accent: "#2a7b88",
     accentText: "#ffffff",
-    icon: "account_balance",
   },
   people: {
     slug: "people",
@@ -48,7 +43,6 @@ export const CATEGORIES: Record<CategorySlug, Category> = {
     tagline: "Memory is itself an act of resistance.",
     accent: "#795548",
     accentText: "#ffffff",
-    icon: "person",
   },
 };
 
