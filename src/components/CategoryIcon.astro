@@ -1,0 +1,122 @@
+---
+// Custom SVG icons for each category tile.
+// All icons use currentColor so they inherit white from the parent tile.
+// Rendered at two sizes: ghost (~112px decorative) and front (~40px prominent).
+import type { CategorySlug } from "../lib/categories";
+
+interface Props {
+  slug: CategorySlug;
+  /** Width/height in px — applied directly on the SVG element. */
+  size?: number;
+  class?: string;
+}
+
+const { slug, size = 40, class: className = "" } = Astro.props;
+---
+
+{slug === "artists" ? (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 100 100"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    class={className}
+  >
+    <!--
+      Ascending beamed eighth notes: left notehead lower, right notehead higher,
+      stems up, thick beam angled from lower-left to upper-right.
+      Stems are equal height rects; each rect bottom extends into the notehead
+      ellipse so the same fill color hides the junction — no visible seam.
+    -->
+    <!-- Left notehead (lower pitch) -->
+    <ellipse cx="19" cy="79" rx="17" ry="11" transform="rotate(-25, 19, 79)" />
+    <!-- Left stem — bottom buried inside notehead ellipse, same height as right -->
+    <rect x="32" y="24" width="7" height="57" rx="3" />
+    <!-- Right notehead (higher pitch — ascending) -->
+    <ellipse cx="63" cy="59" rx="17" ry="11" transform="rotate(-25, 63, 59)" />
+    <!-- Right stem — same height as left stem; y=7 keeps top behind beam -->
+    <rect x="76" y="7" width="7" height="54" rx="3" />
+    <!-- Beam: angled ascending left→right, covers stem tops -->
+    <polygon points="32,24 83,4 83,14 32,34" />
+  </svg>
+) : slug === "movements" ? (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 100 100"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    class={className}
+  >
+    <!--
+      Three bold parallel diagonal strokes, all sweeping upper-right —
+      multiple entities moving in the same direction.
+      Direction comes from the shape itself, not arrangement.
+      Rounded caps keep it organic rather than military.
+    -->
+    <line x1="8"  y1="82" x2="38" y2="20" stroke="currentColor" stroke-width="13" stroke-linecap="round" />
+    <line x1="34" y1="90" x2="64" y2="28" stroke="currentColor" stroke-width="13" stroke-linecap="round" />
+    <line x1="60" y1="90" x2="90" y2="28" stroke="currentColor" stroke-width="13" stroke-linecap="round" />
+  </svg>
+) : slug === "organizations" ? (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 100 100"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    class={className}
+  >
+    <!--
+      Asymmetric network of 4 nodes — structure, collaboration, deliberate arrangement.
+      Node sizes vary (hub vs. leaf) to break the geometric regularity.
+    -->
+    <!-- Edges first so nodes paint over them -->
+    <line x1="28" y1="22" x2="76" y2="30" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+    <line x1="28" y1="22" x2="16" y2="74" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+    <line x1="76" y1="30" x2="82" y2="78" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+    <line x1="76" y1="30" x2="16" y2="74" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+    <!-- Nodes: different radii signal hierarchy -->
+    <circle cx="28" cy="22" r="14" fill="currentColor" />
+    <circle cx="76" cy="30" r="11" fill="currentColor" />
+    <circle cx="16" cy="74" r="8"  fill="currentColor" />
+    <circle cx="82" cy="78" r="10" fill="currentColor" />
+  </svg>
+) : (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 100 100"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    class={className}
+  >
+    <!--
+      Three human silhouettes at different heights and proportions.
+      Large heads (heads are the primary legibility signal), simple torso + legs.
+      Left: medium, broader. Center: tallest, slender. Right: shorter.
+    -->
+    <!-- Left person -->
+    <circle cx="20" cy="34" r="13" />
+    <rect x="9"  y="47" width="22" height="28" rx="8" />
+    <rect x="8"  y="68" width="10" height="22" rx="4" />
+    <rect x="22" y="68" width="10" height="22" rx="4" />
+
+    <!-- Center person (tallest) -->
+    <circle cx="50" cy="20" r="15" />
+    <rect x="37" y="35" width="26" height="30" rx="9" />
+    <rect x="36" y="58" width="11" height="26" rx="5" />
+    <rect x="53" y="58" width="11" height="26" rx="5" />
+
+    <!-- Right person (shorter, stockier) -->
+    <circle cx="80" cy="36" r="12" />
+    <rect x="69" y="48" width="22" height="24" rx="7" />
+    <rect x="68" y="65" width="10" height="22" rx="4" />
+    <rect x="82" y="65" width="10" height="22" rx="4" />
+  </svg>
+)}
