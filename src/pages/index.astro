@@ -67,13 +67,13 @@ const articles = (await getCollection("articles", ({ data }) => !data.draft))
         </p>
       </Center>
     ) : (
-      <Grid as="ul" class="list-none p-0">
+      <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-card-gap list-none p-0">
         {articles.map((article) => (
           <li>
             <ArticleCard article={article} />
           </li>
         ))}
-      </Grid>
+      </ul>
     )}
   </Container>
 </BaseLayout>
