@@ -43,10 +43,16 @@ const body = article.body ?? '';
 const tldrMatch = body.match(/^#\s*TLDR\s*$/m);
 const researchMatch = body.match(/^#\s*Research\s*$/m);
 
-const storyMd = (tldrMatch && researchMatch)
+// storyMd: content between # TLDR and # Research (if both present),
+// or content before # Research (if only Research marker present),
+// or empty string (if neither marker found — deepMd gets everything).
+const storyMd = tldrMatch && researchMatch
   ? body.slice(tldrMatch.index! + tldrMatch[0].length, researchMatch.index).trim()
-  : '';
+  : researchMatch
+    ? body.slice(0, researchMatch.index).trim()
+    : '';
 
+// deepMd: content after # Research, or full body if no markers.
 const deepMd = researchMatch
   ? body.slice(researchMatch.index! + researchMatch[0].length).trim()
   : body.trim();
