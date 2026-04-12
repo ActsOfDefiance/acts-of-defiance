@@ -1,7 +1,8 @@
 ---
 import { getCollection, render } from "astro:content";
+import { marked } from "marked";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Prose from "../../components/Prose.astro";
+import ArticleContent from "../../components/ArticleContent.svelte";
 import SectionHead from "../../components/SectionHead.astro";
 import { CATEGORIES, badgeStyle, type CategorySlug } from "../../lib/categories";
 import Container from "../../components/layout/Container.astro";
@@ -22,7 +23,7 @@ export async function getStaticPaths() {
     props: {
       article,
       related: articles
-        .filter((a) => a.id !== article.id && a.data.category === article.data.category)
+        .filter((a) => a.id !== article.id && a.data.category !== undefined && a.data.category === article.data.category)
         .slice(0, 3),
     },
   }));
@@ -31,7 +32,23 @@ export async function getStaticPaths() {
 // Default `related` to an empty array so the page renders safely if the
 // dev server's content collection cache goes stale between HMR passes.
 const { article, related = [] } = Astro.props;
-const { Content } = await render(article);
+
+// Split raw markdown body at structural markers.
+// "# TLDR" and "# Research" are section delimiters — omitted from rendered output.
+const body = article.body ?? '';
+const tldrMatch = body.match(/^#\s*TLDR\s*$/m);
+const researchMatch = body.match(/^#\s*Research\s*$/m);
+
+const storyMd = (tldrMatch && researchMatch)
+  ? body.slice(tldrMatch.index! + tldrMatch[0].length, researchMatch.index).trim()
+  : '';
+
+const deepMd = researchMatch
+  ? body.slice(researchMatch.index! + researchMatch[0].length).trim()
+  : body.trim();
+
+const storyHtml = String(marked.parse(storyMd));
+const deepHtml = String(marked.parse(deepMd));
 
 // Single source of truth for badge + tint comes from src/lib/categories.ts.
 // `badge` is the inline-style string for the category pill; `tintFor()` returns
@@ -118,41 +135,9 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
         </Cluster>
       </Stack>
 
-      <!--
-        Content version selector — UI scaffolding only. The Short Read /
-        Deep Dive split ships when dime emits the short version; for now
-        Deep Dive is the only content variant. See ticket for details.
-      -->
-      <div class="flex gap-sm mt-xl border-t border-outline-variant pt-lg">
-        <!-- Short Read (inactive) -->
-        <div class="flex-1 text-left p-md bg-surface-container text-on-surface cursor-default">
-          <div class="uppercase font-bold tracking-widest opacity-60 mb-2xs" style="font-family: var(--font-headline); font-size: var(--text-caption)">
-            Short Read
-          </div>
-          <div class="font-bold leading-tight" style="font-family: var(--font-headline); font-size: var(--text-body-lg)">
-            The Story
-          </div>
-          <div class="h-1 w-0 bg-primary-container mt-sm"></div>
-        </div>
-        <!-- Deep Dive (active) -->
-        <div class="flex-1 text-left p-md bg-white border-b-4 border-primary-container shadow-md cursor-default">
-          <div class="uppercase font-bold tracking-widest text-primary-md mb-2xs" style="font-family: var(--font-headline); font-size: var(--text-caption)">
-            Full Research
-          </div>
-          <div class="font-bold leading-tight text-on-surface" style="font-family: var(--font-headline); font-size: var(--text-body-lg)">
-            Deep Dive
-          </div>
-          <div class="h-1 w-full bg-primary-container mt-sm"></div>
-        </div>
-      </div>
     </div>
 
-    <!-- Article body: parchment background -->
-    <article class="bg-parchment py-2xl md:py-section-y px-container-x md:px-0">
-      <Prose>
-        <Content />
-      </Prose>
-    </article>
+    <ArticleContent {storyHtml} {deepHtml} client:load />
 
     <!-- Related articles -->
     {related.length > 0 && (
@@ -162,7 +147,7 @@ const dateStr = article.data.date.toLocaleDateString("en-US", {
         </div>
         <Grid cols="1 md:3" gap="lg">
           {related.map((rel) => {
-            const tint = tintFor(rel.data.category);
+            const tint = tintFor(rel.data.category ?? "");
             const relBadge = badgeStyle(rel.data.category);
             const relCat = CATEGORIES[rel.data.category as CategorySlug];
             return (
