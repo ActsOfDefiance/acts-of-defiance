@@ -35,7 +35,7 @@ const placeholderBg =
 
 <a
   href={`/articles/${article.id}`}
-  class="aod-brand-card aod-focus-ring flex flex-col gap-md group cursor-pointer rounded-lg bg-white"
+  class="aod-brand-card aod-focus-ring flex flex-col group cursor-pointer rounded-lg bg-white"
 >
   <div
     class:list={[
@@ -51,7 +51,7 @@ const placeholderBg =
       <img
         src={`/images/articles/${article.data.images.hero}`}
         alt={article.data.title}
-        class="aod-brand-card__image w-full h-full object-cover mix-blend-multiply opacity-90"
+        class="aod-brand-card__image w-full h-full object-cover"
       />
     ) : (
       <div class="w-full h-full flex items-center justify-center">
@@ -72,9 +72,10 @@ const placeholderBg =
       </span>
     </div>
   </div>
-  <Stack gap="xs" class="px-md pb-md">
+  <div style="height: 10rem; overflow: hidden">
+  <Stack gap="xs" class="px-md pb-md pt-sm">
     <h3
-      class="aod-brand-card__title uppercase tracking-tight text-deep-charcoal"
+      class="aod-brand-card__title line-clamp-2 uppercase tracking-tight text-deep-charcoal"
       style="font-family: var(--font-headline); font-size: var(--text-h4); line-height: 1.05"
     >
       {article.data.title}
@@ -85,17 +86,6 @@ const placeholderBg =
     >
       {article.data.description}
     </p>
-    {article.data.tags.length > 0 && (
-      <Cluster gap="2xs" class="pt-3xs">
-        {article.data.tags.map((tag) => (
-          <span
-            class="font-bold uppercase tracking-tighter text-deep-charcoal/60"
-            style="font-size: var(--text-caption)"
-          >
-            #{tag}
-          </span>
-        ))}
-      </Cluster>
-    )}
   </Stack>
+  </div>
 </a>
