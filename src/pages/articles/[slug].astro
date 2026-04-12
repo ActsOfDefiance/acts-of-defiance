@@ -1,6 +1,10 @@
 ---
 import { getCollection, render } from "astro:content";
-import { marked } from "marked";
+import { remark } from "remark";
+import remarkGfm from "remark-gfm";
+import remarkRehype from "remark-rehype";
+import rehypeRaw from "rehype-raw";
+import rehypeStringify from "rehype-stringify";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ArticleContent from "../../components/ArticleContent.svelte";
 import SectionHead from "../../components/SectionHead.astro";
@@ -47,8 +51,18 @@ const deepMd = researchMatch
   ? body.slice(researchMatch.index! + researchMatch[0].length).trim()
   : body.trim();
 
-const storyHtml = String(marked.parse(storyMd));
-const deepHtml = String(marked.parse(deepMd));
+async function renderMd(md: string): Promise<string> {
+  const file = await remark()
+    .use(remarkGfm)
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypeRaw)
+    .use(rehypeStringify)
+    .process(md);
+  return String(file);
+}
+
+const storyHtml = await renderMd(storyMd);
+const deepHtml = await renderMd(deepMd);
 
 // Single source of truth for badge + tint comes from src/lib/categories.ts.
 // `badge` is the inline-style string for the category pill; `tintFor()` returns

@@ -119,3 +119,41 @@
   padding: 0.1em 0.3em;
   border-radius: 0.125rem;
 }
+
+/* GFM footnote superscripts — inline [^n] references */
+.prose sup a[data-footnote-ref] {
+  color: var(--color-primary-md);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: 0.75em;
+}
+
+.prose sup a[data-footnote-ref]:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* GFM footnotes section */
+.prose .footnotes {
+  border-top: 1px solid var(--color-outline-variant);
+  margin-top: var(--spacing-2xl);
+  padding-top: var(--spacing-lg);
+  font-size: var(--text-caption);
+  color: var(--color-on-surface-variant);
+}
+
+.prose .footnotes ol {
+  font-size: var(--text-caption);
+  line-height: 1.6;
+}
+
+/* Back-links ↩ */
+.prose a.data-footnote-backref {
+  color: var(--color-on-surface-variant);
+  text-decoration: none;
+  margin-left: 0.25em;
+}
+
+.prose a.data-footnote-backref:hover {
+  color: var(--color-primary-md);
+}
